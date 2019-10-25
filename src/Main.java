@@ -35,8 +35,13 @@ public class Main
     private static boolean validate(ArrayList<ArrayList<String>> argsArray)
     {
         //TODO
-
+        //All argument validation happens here
         return true;
+    }
+
+    private static void initialize()    //Initialization happens here
+    {
+        Config.getConfig(); //initialise config file
     }
 
     public static void main(String[] args)
@@ -45,9 +50,9 @@ public class Main
 
         if (validate(argsArray))
         {
-            //TODO
-            //init()
+            initialize();
             //IT'S PROGRAM TIME
+            //TODO
         }
         else
         {
