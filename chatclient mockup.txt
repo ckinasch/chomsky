@@ -1,0 +1,20 @@
+big_man@bigpc:~$ chomsky --connect 192.168.1.54 3165 john
+
+
+connected to 192.168.1.54.
+
+john -> verified.
+
+Chat Opened.
+
+john: Hello
+
+big_man: gidday partner.
+
+big_man: oh wow, so big.
+
+john: aight, bye.
+
+connection with 192.168.1.54 closed
+
+big_man@bigpc:~$

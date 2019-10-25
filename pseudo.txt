@@ -1,0 +1,92 @@
+class Peer
+{
+    private String alias;
+    private EncryptionPublicKey publicKey;
+}
+
+class Identity
+{
+    String username;
+    EncryptionPrivateKey privateKey;
+    
+    ReadPKCS()
+}
+
+class Config
+{
+    private static Config config;
+    Identity[] identities;
+
+    String userPath;
+
+    Peer[] addressBook;
+
+    public static Config getConfig()
+    {
+        if (config == null)
+            config = new Config();
+
+        return config;
+    }
+}
+
+connectToHost()
+{
+    createThread(listenOnSocket());
+    createThread(listenOnCLI());
+
+    thread.join(whenOneClosesOut);
+}
+
+
+splitArgsToArgArray(String[] ARGS)
+{
+    new String[][] argsArray
+
+    ITERATION LOOP
+    {
+        if ARGS.first IS EQUAL TO '-'
+            argsArray[x][] = args
+        else
+            argsArray[][x] = args;
+
+    }
+
+    return argsArray
+}
+
+validate(argsArray)
+{
+    LOOP THROUGH ARRAY
+        CHECK EACH [X][0] POSITION ELEMENT AGAINST [0][X] ARGUMENTS FOR MIN/MAX ARGUMENTS AND OTHER DATA VALIDATION
+        if good
+            return good
+        if bad
+            return bad
+}
+
+init()
+{
+    IF NO CONFIG
+        MAKE CONFIG
+    ELSE 
+        LOAD CONFIG
+
+    USE CONFIG
+}
+
+MAIN FUNCTION (STRING[] ARGS)
+{
+    argsArray = splitArgsToArgArray(ARGS);
+    
+    if(!validate(argsArray))
+        ERROR AND STOP
+    else
+    {
+        init()
+        switch(argsArray[0][0])
+        {
+            VALUE = RELEVANTFUNCTION(argsArray[0][1], argsArray[0][2])
+        }
+    }
+}
