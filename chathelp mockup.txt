@@ -32,5 +32,6 @@ Help - Format chomsky <arg> <value>
 
 	--debug,		-ddd
 	--version,		-v
+	--help,			-h
 	
 	
