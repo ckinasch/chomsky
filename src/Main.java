@@ -3,51 +3,11 @@ import java.util.HashMap;
 
 public class Main
 {
-    private static ArrayList<ArrayList<String>> splitArgs(String[] args)
+    private static HashMap<String, Executable> commandMap;
+
+    private static void loadCommandMap()
     {
-        ArrayList<ArrayList<String>> out = new ArrayList();
-
-        for (int i = 0; i < args.length; i++)
-        {
-            if (args[i].charAt(0) == '-')   //if string begins with -, is a command
-            {
-                out.add(new ArrayList());
-                out.get(out.size()-1).add(args[i].substring(1));    //add to [x][0] position of array
-            }
-            else    //otherwise is an argument
-            {
-                try
-                {
-                    if (!out.get(out.size() - 1).isEmpty())
-                        out.get(out.size() - 1).add(args[i]); //add to [x][y] position of array
-                }
-                catch (ArrayIndexOutOfBoundsException e)    //Throws if arguments come before command
-                {
-                    System.out.println("Syntax error! Check help for details (-h)");
-                    break;
-                }
-            }
-
-        }
-
-        return out;
-    }
-
-    private static boolean validate(ArrayList<ArrayList<String>> argsArray)
-    {
-        //TODO
-        //All argument validation happens here
-        return true;
-    }
-
-    private static void initialize()    //Initialization happens here
-    {
-        Config.getConfig(); //initialise config file
-    }
-
-    private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments
-    {
-        HashMap<String, Executable> commandMap = new HashMap(); //HashMap contains the CLI identifier and command as a key value pair
+        commandMap = new HashMap(); //HashMap contains the CLI identifier and command as a key value pair
 
         //Define commands below
         commandMap.put("i", new Executable()
@@ -193,7 +153,53 @@ public class Main
                 //TODO
             }
         });
+    }
 
+    private static ArrayList<ArrayList<String>> splitArgs(String[] args)
+    {
+        ArrayList<ArrayList<String>> out = new ArrayList();
+
+        for (int i = 0; i < args.length; i++)
+        {
+            if (args[i].charAt(0) == '-')   //if string begins with -, is a command
+            {
+                out.add(new ArrayList());
+                out.get(out.size()-1).add(args[i].substring(1));    //add to [x][0] position of array
+            }
+            else    //otherwise is an argument
+            {
+                try
+                {
+                    if (!out.get(out.size() - 1).isEmpty())
+                        out.get(out.size() - 1).add(args[i]); //add to [x][y] position of array
+                }
+                catch (ArrayIndexOutOfBoundsException e)    //Throws if arguments come before command
+                {
+                    System.out.println("Syntax error! Check help for details (-h)");
+                    break;
+                }
+            }
+
+        }
+
+        return out;
+    }
+
+    private static boolean validate(ArrayList<ArrayList<String>> argsArray)
+    {
+        //TODO
+        //All argument validation happens here
+        return true;
+    }
+
+    private static void initialize()    //Initialization happens here
+    {
+        Config.getConfig(); //initialise config file
+        loadCommandMap();
+    }
+
+    private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments
+    {
         for (ArrayList<String> e: argsArray)    //For each command given
         {
             if (commandMap.containsKey(e.get(0)))   //If the command exists in the hashmap
