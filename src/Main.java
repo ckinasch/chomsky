@@ -1,3 +1,5 @@
+import net.sf.ntru.encrypt.NtruEncrypt;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -217,6 +219,10 @@ public class Main
     public static void main(String[] args)
     {
         ArrayList<ArrayList<String>> argsArray = splitArgs(args);    //Split args into [arg][param] array
+
+        NTRUContext test = new NTRUContext();
+
+        test.writeKeyPair("./testKP");
 
         if (validate(argsArray))
         {
