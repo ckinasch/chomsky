@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="net.sf.ntru:ntru:1.2" type="repository">
+    <properties maven-id="net.sf.ntru:ntru:1.2" />
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/net/sf/ntru/ntru/1.2/ntru-1.2.jar!/" />
+      <root url="jar://$MAVEN_REPOSITORY$/org/bouncycastle/bcprov-jdk16/1.46/bcprov-jdk16-1.46.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

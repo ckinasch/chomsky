@@ -2,7 +2,30 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="26c05de7-f2f1-4f6b-8160-b4fbd8647cf5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Chomsky.iml" beforeDir="false" afterPath="$PROJECT_DIR$/Chomsky.iml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Config.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Executable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Executable.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Identity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Identity.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Peer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Peer.class" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -25,8 +48,15 @@
     <ConfirmationsSetting value="1" id="Add" />
   </component>
   <component name="PropertiesComponent">
+    <property name="Downloaded.Files.Path.Enabled" value="false" />
+    <property name="Repository.Attach.Annotations" value="false" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572155231034" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="project.structure.side.proportion" value="0.2" />
     <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Java" />
   </component>
   <component name="RunDashboard">
@@ -81,7 +111,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
