@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -124,6 +125,18 @@ public class Main
             public void execute(ArrayList<String> args)
             {
                 //TODO
+                try
+                {
+                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (NumberFormatException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
 
