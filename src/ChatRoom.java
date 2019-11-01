@@ -17,7 +17,7 @@ public class ChatRoom
 
         clientList = new ArrayList<>(); //List of connected clients
 
-        System.out.println("Waiting for Connection...");
+        System.out.println("Waiting for ChatConnection...");
 
         Thread listenThread = new Thread()
         {
@@ -40,9 +40,9 @@ public class ChatRoom
                         socket = serverSocket.accept();
                         clientList.add(new Client(socket, new Alias("ConnectingUser")));   //TODO Create a new alias object with connecting users information
                         Thread chatThread = new Thread(clientList.get(clientList.size()-1));
-                        System.out.println("New connection from " + clientList.get(clientList.size() - 1).getAddress());
                         chatThread.start();
 
+                        sendServerMessage("New connection from " + clientList.get(clientList.size() - 1).getAddress());
                     }
                     catch (IOException e)
                     {
@@ -64,6 +64,22 @@ public class ChatRoom
         listenThread.start();
     }
 
+    private void sendServerMessage(String message) throws IOException
+    {
+        for (Client c : clientList)
+        {
+            c.sendMessage(message);
+        }
+    }
+
+    private void sendMessage(String message, Client origin) throws IOException
+    {
+        for (Client c : clientList)
+        {
+            c.sendMessage(String.format("%s: %s", origin.getClientAlias().getUsername(), message));
+        }
+    }
+
     private class Client implements Runnable
     {
         private Alias clientAlias;
@@ -81,6 +97,17 @@ public class ChatRoom
             inputStream = new DataInputStream(socket.getInputStream());
             outputStream = new DataOutputStream(socket.getOutputStream());
             isConnected = true;
+        }
+
+        public void sendMessage(String message) throws IOException
+        {
+            outputStream.flush();
+            outputStream.writeUTF(message);
+        }
+
+        public Alias getClientAlias()
+        {
+            return clientAlias;
         }
 
         public String getAddress()

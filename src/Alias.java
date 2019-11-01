@@ -10,7 +10,7 @@ public class Alias
         this.username = username;
     }
 
-    String getUsename()
+    String getUsername()
     {
         return username;
     }
