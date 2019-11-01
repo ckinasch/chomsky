@@ -30,9 +30,9 @@ public class Config
      *
      * getAddressBook -> addressBook
      *
-     * setIdentities
+     * setIdentities : identities.add(vals) -> write config
      *
-     * setAddressBook
+     * setAddressBook : addressBook.add(vals) -> write config
      *
      */
 
