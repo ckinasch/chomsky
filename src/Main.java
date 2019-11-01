@@ -127,7 +127,8 @@ public class Main
                 //TODO
                 try
                 {
-                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
+                    new ChatRoom(Integer.parseInt(args.get(0)));
+                    new Connection("127.0.0.1", Integer.parseInt(args.get(0)));
                 }
                 catch (IOException e)
                 {

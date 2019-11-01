@@ -1,7 +1,6 @@
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
@@ -10,69 +9,108 @@ public class ChatRoom
 {
     private ServerSocket serverSocket;
     private Socket socket;
-    private boolean isRunning;
     private ArrayList<Client> clientList;
 
     public ChatRoom(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
-        clientList = new ArrayList<Client>();
-        clientList.add(new Client(new Alias("Username"), "Address"));
-        isRunning = true;
 
-        try
+        clientList = new ArrayList<>(); //List of connected clients
+
+        System.out.println("Waiting for Connection...");
+
+        Thread listenThread = new Thread()
         {
-            System.out.println("Waiting for Connection...");
-            socket = serverSocket.accept();
+            private Boolean isRunning;
 
-            clientList.add(new Client(new Alias("ConnectingUser"),
-                    socket.getInetAddress().toString()));
+            public void setRunning(Boolean running)
+            {
+                isRunning = running;
+            }
 
-            System.out.println("Connection from "+clientList.get(1).getAddress());
-        }
-        catch (IOException e)
-        {
-            e.printStackTrace();
-        }
+            @Override
+            public void run()
+            {
+                super.run();
+                isRunning = true;
+                while(isRunning)
+                {
+                    try
+                    {
+                        socket = serverSocket.accept();
+                        clientList.add(new Client(socket, new Alias("ConnectingUser")));   //TODO Create a new alias object with connecting users information
+                        Thread chatThread = new Thread(clientList.get(clientList.size()-1));
+                        System.out.println("New connection from " + clientList.get(clientList.size() - 1).getAddress());
+                        chatThread.start();
+
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
+                try
+                {
+                    socket.close();
+                    serverSocket.close();
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
+            }
+        };
+
+        listenThread.start();
     }
 
-    public boolean isRunning()
+    private class Client implements Runnable
     {
-        return isRunning;
-    }
+        private Alias clientAlias;
+        private String address;
+        private Socket socket;
+        private DataInputStream inputStream;
+        private DataOutputStream outputStream;
+        private Boolean isConnected;
 
-    private class Client
-    {
-        Alias clientAlias;
-        String address;
-
-        public Client(Alias alias, String address)
+        public Client(Socket socket, Alias alias) throws IOException
         {
             this.clientAlias = alias;
-            this.address = address;
+            this.socket = socket;
+            this.address = socket.getInetAddress().toString();
+            inputStream = new DataInputStream(socket.getInputStream());
+            outputStream = new DataOutputStream(socket.getOutputStream());
+            isConnected = true;
         }
 
         public String getAddress()
         {
             return address;
         }
-    }
-
-    private class ChatThread implements Runnable
-    {
-        private DataInputStream inputStream;
-        private DataOutputStream outputStream;
-
-        public ChatThread(Socket socket) throws IOException
-        {
-            inputStream = new DataInputStream(socket.getInputStream());
-            outputStream = new DataOutputStream(socket.getOutputStream());
-        }
 
         @Override
         public void run()
         {
+            //todo
+            while (isConnected)
+            {
 
+            }
+            try
+            {
+                inputStream.close();
+                outputStream.close();
+                socket.close();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        public void closeConnection()
+        {
+            isConnected = false;
         }
     }
 }
