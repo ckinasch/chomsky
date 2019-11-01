@@ -216,6 +216,7 @@ public class Main
 
     public static void main(String[] args)
     {
+
         ArrayList<ArrayList<String>> argsArray = splitArgs(args);    //Split args into [arg][param] array
 
         if (validate(argsArray))
