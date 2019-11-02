@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -106,7 +107,22 @@ public class Main
             @Override
             public void execute(ArrayList<String> args)
             {
-                //TODO
+                try
+                {
+                    new ChatConnection(args.get(0), Integer.parseInt(args.get(1)));
+                }
+                catch (NumberFormatException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (ConnectException e)
+                {
+                    System.out.println("Connection Error: "+e.getLocalizedMessage());
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -124,17 +140,20 @@ public class Main
             @Override
             public void execute(ArrayList<String> args)
             {
-                //TODO
                 try
                 {
-                    new ChatRoom(Integer.parseInt(args.get(0)));
+                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
                     new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)));
                 }
-                catch (IOException e)
+                catch (ConnectException e)
+                {
+                    System.out.println("Connection Error: "+e.getLocalizedMessage());
+                }
+                catch (NumberFormatException e)
                 {
                     e.printStackTrace();
                 }
-                catch (NumberFormatException e)
+                catch (IOException e)
                 {
                     e.printStackTrace();
                 }

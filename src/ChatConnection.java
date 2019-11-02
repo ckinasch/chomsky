@@ -3,26 +3,27 @@ import java.net.Socket;
 
 public class ChatConnection
 {
-    Socket socket;
-    DataInputStream inputStream;
-    DataOutputStream outputStream;
+    private Socket socket;
+    private DataInputStream inputStream;
+    private DataOutputStream outputStream;
 
     public ChatConnection(String address, int port) throws IOException
     {
         socket = new Socket(address, port);
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
-        new Thread(new ConversationListener()).start();
-        new ConversationSender();
+        new Thread(new ClientChatListener()).start();
+
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+        while (true)
+        {
+            outputStream.flush();
+            outputStream.writeUTF(reader.readLine());
+        }
     }
 
-    public void closeConnection() throws IOException{
-        outputStream.close();
-        inputStream.close();
-        socket.close();
-    }
-
-    private class ConversationListener implements Runnable
+    private class ClientChatListener implements Runnable    //Listens for messages sent from chat server, then prints
     {
         @Override
         public void run()
@@ -33,27 +34,15 @@ public class ChatConnection
                 {
                     System.out.println(inputStream.readUTF());
                 }
+                catch (EOFException e)
+                {
+                    System.out.println("Connection terminated");
+                    break;
+                }
                 catch (IOException e)
                 {
                     e.printStackTrace();
                 }
-            }
-        }
-    }
-
-    private class ConversationSender
-    {
-        public ConversationSender() throws IOException
-        {
-            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-            String in;
-            System.out.print("Ready to send!");
-
-            while (true)
-            {
-                in = reader.readLine();
-                outputStream.flush();
-                outputStream.writeUTF(in);
             }
         }
     }

@@ -5,109 +5,79 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.util.ArrayList;
 
-public class ChatRoom
+public class ChatRoom implements Runnable
 {
-    private ServerSocket serverSocket;
     private Socket socket;
-    private ArrayList<Client> clientList;
+    private ServerSocket serverSocket;
+    ArrayList<Client> connectedClients;
 
     public ChatRoom(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
-
-        clientList = new ArrayList<>(); //List of connected clients
-
-        System.out.println("Waiting for ChatConnection...");
-
-        Thread listenThread = new Thread()
-        {
-            private Boolean isRunning;
-
-            public void setRunning(Boolean running)
-            {
-                isRunning = running;
-            }
-
-            @Override
-            public void run()
-            {
-                super.run();
-                isRunning = true;
-                while(isRunning)
-                {
-                    try
-                    {
-                        socket = serverSocket.accept();
-                        clientList.add(new Client(socket, new Alias("ConnectingUser")));   //TODO Create a new alias object with connecting users information
-                        Thread chatThread = new Thread(clientList.get(clientList.size()-1));
-                        chatThread.start();
-
-                        sendServerMessage("New connection from " + clientList.get(clientList.size() - 1).getAddress());
-                    }
-                    catch (IOException e)
-                    {
-                        e.printStackTrace();
-                    }
-                }
-                try
-                {
-                    socket.close();
-                    serverSocket.close();
-                }
-                catch (IOException e)
-                {
-                    e.printStackTrace();
-                }
-            }
-        };
-
-        listenThread.start();
+        connectedClients = new ArrayList<>();
     }
 
-    private void sendServerMessage(String message) throws IOException
+    @Override
+    public void run()   //Thread listens for client connections
     {
-        for (Client c : clientList)
+        System.out.println("Chat Room Opened");
+
+        while(true)
         {
-            c.sendMessage(message);
+            try
+            {
+                socket = serverSocket.accept();
+                Client client = new Client(socket);
+                Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
+                connectedClients.add(client);
+                clientHandler.start();
+                sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
+
+                //TODO Identity Verification
+                //if identity is verified
+                //sendServerMessage(String.format("%s verified", username));
+
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
         }
     }
 
-    private void sendMessage(String message, Client origin) throws IOException
+    private void sendServerMessage(String message) throws IOException   //Send message from server
     {
-        for (Client c : clientList)
+        for (Client c : connectedClients)
         {
-            c.sendMessage(String.format("%s: %s", origin.getClientAlias().getUsername(), message));
+            c.getOutputStream().flush();
+            c.getOutputStream().writeUTF(message);
+        }
+    }
+
+    private void sendUserMessage(String message, Client origin) throws IOException  //Send message from user
+    {
+        for (Client c : connectedClients)
+        {
+            c.getOutputStream().flush();
+            c.getOutputStream().writeUTF(String.format("%s: %s", origin.getAddress(), message));
         }
     }
 
     private class Client implements Runnable
     {
-        private Alias clientAlias;
-        private String address;
         private Socket socket;
-        private DataInputStream inputStream;
         private DataOutputStream outputStream;
-        private Boolean isConnected;
+        private DataInputStream inputStream;
+        private String address;
+        private Boolean isLoggedIn;
 
-        public Client(Socket socket, Alias alias) throws IOException
+        public Client(Socket clientSocket) throws IOException
         {
-            this.clientAlias = alias;
-            this.socket = socket;
-            this.address = socket.getInetAddress().toString();
-            inputStream = new DataInputStream(socket.getInputStream());
+            socket = clientSocket;
             outputStream = new DataOutputStream(socket.getOutputStream());
-            isConnected = true;
-        }
-
-        public void sendMessage(String message) throws IOException
-        {
-            outputStream.flush();
-            outputStream.writeUTF(message);
-        }
-
-        public Alias getClientAlias()
-        {
-            return clientAlias;
+            inputStream = new DataInputStream(socket.getInputStream());
+            address = socket.getInetAddress().toString();
+            isLoggedIn = true;
         }
 
         public String getAddress()
@@ -115,14 +85,43 @@ public class ChatRoom
             return address;
         }
 
-        @Override
-        public void run()
+        public DataOutputStream getOutputStream()
         {
-            //todo
-            while (isConnected)
-            {
+            return outputStream;
+        }
 
+        @Override
+        public void run()   //Checks clients input stream for any inbound messaged from client to server
+        {
+            String in = null;
+
+            while (isLoggedIn)
+            {
+                try
+                {
+                    //user command logic here
+                    in = inputStream.readUTF();
+
+                    if (in.charAt(0) == '\\')
+                    {
+                        //TODO process commands
+                        switch(in)
+                        {
+                            case "\\exit":
+                                logOut();
+                                break;
+                            default:
+                                break;
+                        }
+                    }
+                    else
+                        sendUserMessage(in, this);   //broadcasts messages to users on server
+                } catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
+
             try
             {
                 inputStream.close();
@@ -135,9 +134,15 @@ public class ChatRoom
             }
         }
 
-        public void closeConnection()
+        public void logOut()
         {
-            isConnected = false;
+            isLoggedIn = false;
+            connectedClients.remove(connectedClients.indexOf(this));
+        }
+
+        public Boolean getLoggedIn()
+        {
+            return isLoggedIn;
         }
     }
 }
