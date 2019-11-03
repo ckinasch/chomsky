@@ -6,21 +6,29 @@ public class ChatConnection
     private Socket socket;
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
-
+    private Boolean isLoggedIn;
     public ChatConnection(String address, int port) throws IOException
     {
         socket = new Socket(address, port);
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
         new Thread(new ClientChatListener()).start();
+        isLoggedIn = true;
 
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
-        while (true)
+        while (isLoggedIn)
         {
-            outputStream.flush();
-            outputStream.writeUTF(reader.readLine());
+            if (System.in.available() > 0)
+            {
+                outputStream.flush();
+                outputStream.writeUTF(reader.readLine());
+            }
         }
+
+        outputStream.close();
+        inputStream.close();
+        socket.close();
     }
 
     private class ClientChatListener implements Runnable    //Listens for messages sent from chat server, then prints
@@ -36,7 +44,7 @@ public class ChatConnection
                 }
                 catch (EOFException e)
                 {
-                    System.out.println("Connection terminated");
+                    isLoggedIn = false;
                     break;
                 }
                 catch (IOException e)

@@ -10,6 +10,7 @@ public class ChatRoom implements Runnable
     private Socket socket;
     private ServerSocket serverSocket;
     ArrayList<Client> connectedClients;
+    Boolean serverIsRunning;
 
     public ChatRoom(int port) throws IOException
     {
@@ -21,8 +22,9 @@ public class ChatRoom implements Runnable
     public void run()   //Thread listens for client connections
     {
         System.out.println("Chat Room Opened");
+        serverIsRunning = true;
 
-        while(true)
+        while(serverIsRunning)
         {
             try
             {
@@ -42,6 +44,16 @@ public class ChatRoom implements Runnable
             {
                 e.printStackTrace();
             }
+        }
+
+        try
+        {
+            serverSocket.close();
+            socket.close();
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
         }
     }
 
@@ -93,7 +105,7 @@ public class ChatRoom implements Runnable
         @Override
         public void run()   //Checks clients input stream for any inbound messaged from client to server
         {
-            String in = null;
+            String in;
 
             while (isLoggedIn)
             {
@@ -109,6 +121,11 @@ public class ChatRoom implements Runnable
                         {
                             case "\\exit":
                                 logOut();
+                                if (connectedClients.isEmpty())
+                                {
+                                    System.out.println("All clients have disconnected");
+                                    serverIsRunning = false;
+                                }
                                 break;
                             default:
                                 break;
@@ -134,9 +151,11 @@ public class ChatRoom implements Runnable
             }
         }
 
-        public void logOut()
+        public void logOut() throws IOException
         {
             isLoggedIn = false;
+
+            sendServerMessage(String.format("%s has disconnected", address));
             connectedClients.remove(connectedClients.indexOf(this));
         }
 

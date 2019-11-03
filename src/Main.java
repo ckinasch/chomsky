@@ -260,5 +260,7 @@ public class Main
         {
             System.out.println("Syntax error! Check help for details (-h)");
         }
+
+        System.exit(0);
     }
 }
