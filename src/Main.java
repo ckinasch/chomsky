@@ -1,3 +1,6 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.util.ArrayList;
@@ -183,7 +186,36 @@ public class Main
             @Override
             public void execute(ArrayList<String> args)
             {
-                //TODO
+                FileInputStream in = null;
+
+                try
+                {
+                    in = new FileInputStream(new File("help.txt"));
+                    int buffer;
+                    while ((buffer = in.read()) != -1)
+                    {
+                        System.out.print((char)buffer);
+                    }
+                }
+                catch (FileNotFoundException e)
+                {
+                    System.out.println("Help.txt not found!");
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    try
+                    {
+                        in.close();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
