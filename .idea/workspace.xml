@@ -152,7 +152,7 @@
     <configuration name="Main Connect" type="Application" factoryName="Application" singleton="false">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Chomsky" />
-      <option name="PROGRAM_PARAMETERS" value="-h" />
+      <option name="PROGRAM_PARAMETERS" value="-c 127.0.0.1 16000" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>

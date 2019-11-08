@@ -50,8 +50,7 @@ public class ChatConnection
                 }
                 catch (SocketException e)
                 {
-                    e.printStackTrace();
-                    System.out.println("Session ended");
+                    System.out.println("Session was ended remotely");
                     break;
                 }
                 catch (IOException e)
