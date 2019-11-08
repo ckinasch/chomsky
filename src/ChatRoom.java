@@ -124,6 +124,7 @@ public class ChatRoom implements Runnable
                                 if (connectedClients.isEmpty())
                                 {
                                     System.out.println("All clients have disconnected");
+                                    System.out.println("Shutting down chatroom");
                                     serverIsRunning = false;
                                 }
                                 break;

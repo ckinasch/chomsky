@@ -2,6 +2,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.BindException;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -155,6 +156,10 @@ public class Main
                 catch (NumberFormatException e)
                 {
                     e.printStackTrace();
+                }
+                catch (BindException e)
+                {
+                    System.out.println("Unable to bind to port "+args.get(0));
                 }
                 catch (IOException e)
                 {

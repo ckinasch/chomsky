@@ -1,5 +1,6 @@
 import java.io.*;
 import java.net.Socket;
+import java.net.SocketException;
 
 public class ChatConnection
 {
@@ -45,6 +46,12 @@ public class ChatConnection
                 catch (EOFException e)
                 {
                     isLoggedIn = false;
+                    break;
+                }
+                catch (SocketException e)
+                {
+                    e.printStackTrace();
+                    System.out.println("Session ended");
                     break;
                 }
                 catch (IOException e)

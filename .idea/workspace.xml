@@ -8,7 +8,27 @@
   <component name="ChangeListManager">
     <list default="true" id="26c05de7-f2f1-4f6b-8160-b4fbd8647cf5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/chathelp mockup.txt" beforeDir="false" afterPath="$PROJECT_DIR$/help.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/ChatConnection$ClientChatListener.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/ChatConnection$ClientChatListener.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/ChatConnection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/ChatConnection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChatConnection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatConnection.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/ChatRoom.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/ChatRoom.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -19,20 +39,20 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file pinned="false" current-in-tab="true">
+      <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="224">
-              <caret line="194" column="36" selection-start-line="194" selection-start-column="36" selection-end-line="194" selection-end-column="36" />
+            <state relative-caret-position="446">
+              <caret line="148" selection-start-line="148" selection-end-line="148" />
             </state>
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/help.txt">
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/ChatRoom.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="561">
-              <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
+            <state relative-caret-position="445">
+              <caret line="126" column="81" lean-forward="true" selection-start-line="126" selection-start-column="81" selection-end-line="126" selection-end-column="81" />
             </state>
           </provider>
         </entry>
@@ -67,9 +87,9 @@
         <option value="$PROJECT_DIR$/src/Chatroom.java" />
         <option value="$PROJECT_DIR$/src/Client.java" />
         <option value="$PROJECT_DIR$/src/MessageListener.java" />
+        <option value="$PROJECT_DIR$/src/Main.java" />
         <option value="$PROJECT_DIR$/src/ChatConnection.java" />
         <option value="$PROJECT_DIR$/src/ChatRoom.java" />
-        <option value="$PROJECT_DIR$/src/Main.java" />
       </list>
     </option>
   </component>
@@ -88,8 +108,8 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="PackagesPane" />
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -109,7 +129,7 @@
     </panes>
   </component>
   <component name="PropertiesComponent">
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1573018898461" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1573018909497" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Artifacts" />
     <property name="project.structure.proportion" value="0.15" />
@@ -180,10 +200,9 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
-    <editor active="true" />
+    <frame x="-8" y="-8" width="1696" height="1036" extended-state="6" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.49925262" visible="true" weight="0.14925373" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.49925262" visible="true" weight="0.15281174" />
       <window_info id="Structure" order="1" sideWeight="0.5007474" side_tool="true" weight="0.14765458" />
       <window_info id="Image Layers" order="2" />
       <window_info id="Designer" order="3" />
@@ -192,12 +211,12 @@
       <window_info id="Favorites" order="6" side_tool="true" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.23185265" />
-      <window_info anchor="bottom" id="Run" order="2" weight="0.25568798" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.2751896" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.24695459" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.27464008" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32936078" />
-      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4989339" weight="0.20910075" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.4989339" weight="0.22148395" />
       <window_info anchor="bottom" id="Event Log" order="8" sideWeight="0.5010661" side_tool="true" weight="0.2426869" />
       <window_info anchor="bottom" id="Version Control" order="9" />
       <window_info anchor="bottom" id="Messages" order="10" weight="0.32936078" />
@@ -244,16 +263,6 @@
     </option>
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/Main.java</url>
-          <line>188</line>
-          <properties />
-          <option name="timeStamp" value="1" />
-        </line-breakpoint>
-      </breakpoints>
-    </breakpoint-manager>
     <watches-manager>
       <configuration name="Application">
         <watch expression="isLoggedIn" language="JAVA" />
@@ -298,52 +307,35 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Client.java" />
     <entry file="file://$PROJECT_DIR$/src/MessageListener.java" />
-    <entry file="jar://E:/Java/jdk1.8.0_201/src.zip!/java/io/DataInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="206">
-          <caret line="339" selection-start-line="339" selection-end-line="339" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Java/jdk1.8.0_201/src.zip!/java/io/FileInputStream.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="560">
-          <caret line="253" column="18" selection-start-line="253" selection-start-column="18" selection-end-line="253" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="jar://E:/Java/jdk1.8.0_201/src.zip!/java/lang/Thread.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="418">
-          <caret line="747" selection-start-line="747" selection-end-line="747" />
-        </state>
-      </provider>
-    </entry>
+    <entry file="jar://E:/Java/jdk1.8.0_201/src.zip!/java/io/DataInputStream.java" />
+    <entry file="jar://E:/Java/jdk1.8.0_201/src.zip!/java/io/FileInputStream.java" />
+    <entry file="jar://E:/Java/jdk1.8.0_201/src.zip!/java/lang/Thread.java" />
     <entry file="file://$PROJECT_DIR$/src/ChatConnection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="723">
-          <caret line="54" selection-start-line="54" selection-end-line="54" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/ChatRoom.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="2431">
-          <caret line="158" column="68" selection-start-line="158" selection-start-column="68" selection-end-line="158" selection-end-column="68" />
+        <state relative-caret-position="403">
+          <caret line="54" column="26" selection-start-line="54" selection-start-column="26" selection-end-line="54" selection-end-column="26" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/help.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="561">
-          <caret line="33" column="22" selection-start-line="33" selection-start-column="22" selection-end-line="33" selection-end-column="22" />
-        </state>
-      </provider>
+      <provider selected="true" editor-type-id="text-editor" />
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Main.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="224">
-          <caret line="194" column="36" selection-start-line="194" selection-start-column="36" selection-end-line="194" selection-end-column="36" />
+        <state relative-caret-position="446">
+          <caret line="148" selection-start-line="148" selection-end-line="148" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pseudo.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-102" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/ChatRoom.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="445">
+          <caret line="126" column="81" lean-forward="true" selection-start-line="126" selection-start-column="81" selection-end-line="126" selection-end-column="81" />
         </state>
       </provider>
     </entry>
