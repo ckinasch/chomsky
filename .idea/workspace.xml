@@ -2,29 +2,32 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="26c05de7-f2f1-4f6b-8160-b4fbd8647cf5" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/out/production/Chomsky/META-INF/Chomsky.kotlin_module" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/addressBook.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Executable.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Executable.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Identity.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Identity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Peer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Peer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Config.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Executable.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Identity.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$1.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$10.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$11.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$12.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$13.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$14.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$15.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$16.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$2.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$3.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$4.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$5.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$6.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$7.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$8.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main$9.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Peer.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Alias.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Alias.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Config.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -66,7 +69,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager">
+  <component name="RunManager" selected="Application.keyGen">
     <configuration name="Main" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Chomsky" />
@@ -82,8 +85,26 @@
         <option name="Make" enabled="true" />
       </method>
     </configuration>
+    <configuration name="addressBook" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="addressBook" />
+      <module name="Chomsky" />
+      <option name="PROGRAM_PARAMETERS" value="-C 192.168.0.10 5542 John" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="keyGen" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="MAIN_CLASS_NAME" value="keyGen" />
+      <module name="Chomsky" />
+      <option name="PROGRAM_PARAMETERS" value="-C 192.168.0.10 5542 John" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Application.keyGen" />
+        <item itemvalue="Application.addressBook" />
         <item itemvalue="Application.Main" />
       </list>
     </recent_temporary>
@@ -106,7 +127,9 @@
       <map>
         <entry key="MAIN">
           <value>
-            <State />
+            <State>
+              <option name="COLUMN_ORDER" />
+            </State>
           </value>
         </entry>
       </map>
