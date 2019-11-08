@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -192,7 +193,7 @@ public class Main
         return true;
     }
 
-    private static void initialize()    //Initialization happens here
+    private static void initialize() throws IOException    //Initialization happens here
     {
         Config.getConfig(); //initialise config file
         loadCommandMap();
@@ -214,8 +215,7 @@ public class Main
         }
     }
 
-    public static void main(String[] args)
-    {
+    public static void main(String[] args) throws IOException {
 
         ArrayList<ArrayList<String>> argsArray = splitArgs(args);    //Split args into [arg][param] array
 
