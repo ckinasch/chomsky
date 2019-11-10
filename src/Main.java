@@ -10,6 +10,12 @@ import java.util.HashMap;
 public class Main {
     private static HashMap<String, Executable> commandMap;
 
+    static Config config;
+
+    private static String peers = "peers";
+    private static String ids = "ids";
+
+
     private static void loadCommandMap() {
         commandMap = new HashMap(); //HashMap contains the CLI identifier and command as a key value pair
 
@@ -25,6 +31,11 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    config.addAlias(ids);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -32,6 +43,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    config.removeAlias(ids);
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -39,6 +56,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    config.modifyAlias(ids);
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -46,6 +69,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    System.out.println(config.listAliases(ids));
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -53,6 +82,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    config.addAlias(peers);
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -60,6 +95,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    config.removeAlias(peers);
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -67,6 +108,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    config.modifyAlias(peers);
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -74,6 +121,12 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 //TODO
+                try {
+                    System.out.println(config.listAliases(peers));
+
+                } catch (Exception e) {
+                    System.out.println(e);
+                }
             }
         });
 
@@ -197,7 +250,7 @@ public class Main {
 
     private static void initialize() throws IOException    //Initialization happens here
     {
-        Config.getConfig(); //initialise config file
+        config = Config.getConfig(); //initialise config file
         loadCommandMap();
     }
 

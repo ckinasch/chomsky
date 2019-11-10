@@ -1,5 +1,4 @@
 import java.io.*;
-import java.util.ArrayList;
 import java.util.Properties;
 
 public class Config {
@@ -16,124 +15,64 @@ public class Config {
             "f0:d4:4y:9g:27:cf:97:23:0j:20:4b:88:a7:9t:wd:19",
     };
 
-    // Address Book
-    static ArrayList<Alias> peers = new ArrayList<Alias>();
-    // Personal Identifiers
-    static ArrayList<Alias> ids = new ArrayList<Alias>();
     // Path to config file
-    static final String CONF_PATH = "./config.cfg";
+    private static final String CONF_PATH = "./config.cfg";
+
+    private static Properties readConf = new Properties();
+    private static Properties writeConf = new Properties();
 
     /**
-     * TODO: random gen keys, de/serialization, git branch PODIUM
-     * <p>
-     * NOTES:
-     * -A arg - accept file path / string input
-     * <p>
-     * fetch config
-     * SUCCESS :
-     * read file
-     * return formatted address book
-     * <p>
-     * FAILURE:
-     * create new
-     * options? TODO: define default behaviour
-     * alter path
-     * create new
-     * <p>
-     * // (add-peer) chomsky -A
-     * <p>
-     * // (remove-peer) chomsky -R
-     * <p>
-     * // (modify-peer) chomsky -M
+     * TODO: de/serialization, git branch PODIUM
      */
 
-    public static Config getConfig() throws IOException    //returns currently loaded config file or loads/creates file on first pass
+    public static Config getConfig()    //returns currently loaded config file or loads/creates file on first pass
     {
         if (config == null) {
             //IF CAN LOAD CONFIG
-            //  CONFIG = LOADCONFIG()
+            try {
+                //  CONFIG = LOADCONFIG()
+                readConf.load(new FileInputStream(CONF_PATH));
+                System.out.println("Reading Config");
+            } catch (FileNotFoundException e) {
+                System.out.println("Config file not found");
+
+            } catch (IOException e) {
+                e.printStackTrace();
+                System.out.println("IO exception");
+
+            }
             //ELSE
+
+        } else {
+            // create new config file TODO
             config = new Config();
+
         }
 
         return config;
     }
 
-    String readPeers() {
-        String out = peers.toString();
+    // -a / -A : Add Alias
+    void addAlias(String args) {
 
-        return out;
+        System.out.println(String.format("Add %s", args));
     }
 
-    String readIds() {
-        String out = ids.toString();
-
-        return out;
-    }
-
-    static String writeAlias(ArrayList<Alias> args) {
-        String out = "";
-        for (Alias i :
-                args) {
-            out += i.toString();
-        }
-
-        return out;
-    }
-
-    static void writeConf(String k, ArrayList<Alias> v) throws IOException {
-        Properties writeConf = new Properties();
-
-
-
-        writeConf.setProperty(k, writeAlias(v));
-        writeConf.store(new FileOutputStream(CONF_PATH), "");
+    // -r / -R : Remove Alias
+    void removeAlias(String args) {
+        System.out.println(String.format("Add %s", args));
 
     }
 
-    static String readConf(String args) throws IOException {
-        Properties readConf = new Properties();
-        readConf.load(new FileInputStream(CONF_PATH));
-
-        peers.add(new Alias(readConf.getProperty("peers")));
-
-        return "";
-    }
-
-    /**
-     * Methods for testing implementation : remove after merge
-     */
-    void addPeer(String id) {
-        peers.add(new Alias("Jyhe", dummyKeys[rng()]));
-        peers.add(new Alias("So Big", dummyKeys[rng()]));
-    }
-
-    void modifyPeer(String args, String moreArgs) {
+    // -m / -M : Modify Alias
+    void modifyAlias(String args) {
+        System.out.println(String.format("Add %s", args));
 
     }
 
-    //Modifiable if keys are to be read from file
-    static String keyFromFile() throws IOException {
-        String out = "";
-
-        try (BufferedReader br = new BufferedReader(new FileReader("keys/key" + rng() + ".txt"))) {
-            StringBuilder sb = new StringBuilder();
-            String line = br.readLine();
-
-            while (line != null) {
-                sb.append(line);
-                sb.append(System.lineSeparator());
-                line = br.readLine();
-            }
-            out = sb.toString();
-        }
-
-        System.out.println(out);
-
-        return "";
+    // -l / -L : List Alias
+    String listAliases(String args) {
+        return String.format("Add %s", args);
     }
 
-    static int rng() {
-        return (int) (Math.random() * 6);
-    }
 }

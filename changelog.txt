@@ -1,3 +1,11 @@
+Alteration          -> Main.java    : Add and initialize config
+
+Alteration          -> Config.java  : Cleaned and simplified methods
+
+Alteration          -> Config.java  : Find and initialize config file
+
+Alteration          -> Main.java    : Linked commands to Config.java methods
+________________________________________________________________________________________________________________________
 Alteration          -> Config.java  : pseudo
 
 Removal             -> keys/*       :

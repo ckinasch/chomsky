@@ -4,15 +4,8 @@
     <list default="true" id="26c05de7-f2f1-4f6b-8160-b4fbd8647cf5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/changelog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/changelog.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.cfg" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keys/key1.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keys/key2.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/keys/key3.txt" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/config.cfg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Config.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Identity.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Peer.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/confres/reslist.txt" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/Alias.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Alias.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -62,18 +55,10 @@
     </option>
   </component>
   <component name="RunManager" selected="Application.Main 2">
-    <configuration name="Config" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="Config" />
-      <module name="Chomsky" />
-      <option name="PROGRAM_PARAMETERS" value="-C 192.168.0.10 5542 John" />
-      <method v="2">
-        <option name="Make" enabled="true" />
-      </method>
-    </configuration>
     <configuration name="Main 2" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Chomsky" />
-      <option name="PROGRAM_PARAMETERS" value="-o 5000" />
+      <option name="PROGRAM_PARAMETERS" value="-l" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
@@ -96,13 +81,7 @@
     <list>
       <item itemvalue="Application.Main" />
       <item itemvalue="Application.Main 2" />
-      <item itemvalue="Application.Config" />
     </list>
-    <recent_temporary>
-      <list>
-        <item itemvalue="Application.Config" />
-      </list>
-    </recent_temporary>
   </component>
   <component name="SvnConfiguration">
     <configuration />
