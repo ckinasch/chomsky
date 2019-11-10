@@ -1,3 +1,9 @@
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.net.BindException;
+import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -105,7 +111,22 @@ public class Main
             @Override
             public void execute(ArrayList<String> args)
             {
-                //TODO
+                try
+                {
+                    new ChatConnection(args.get(0), Integer.parseInt(args.get(1)));
+                }
+                catch (NumberFormatException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (ConnectException e)
+                {
+                    System.out.println("Connection Error: "+e.getLocalizedMessage());
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -123,7 +144,27 @@ public class Main
             @Override
             public void execute(ArrayList<String> args)
             {
-                //TODO
+                try
+                {
+                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
+                    new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)));
+                }
+                catch (ConnectException e)
+                {
+                    System.out.println("Connection Error: "+e.getLocalizedMessage());
+                }
+                catch (NumberFormatException e)
+                {
+                    e.printStackTrace();
+                }
+                catch (BindException e)
+                {
+                    System.out.println("Unable to bind to port "+args.get(0));
+                }
+                catch (IOException e)
+                {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -150,7 +191,36 @@ public class Main
             @Override
             public void execute(ArrayList<String> args)
             {
-                //TODO
+                FileInputStream in = null;
+
+                try
+                {
+                    in = new FileInputStream(new File("help.txt"));
+                    int buffer;
+                    while ((buffer = in.read()) != -1)
+                    {
+                        System.out.print((char)buffer);
+                    }
+                }
+                catch (FileNotFoundException e)
+                {
+                    System.out.println("Help.txt not found!");
+                }
+                catch(IOException e)
+                {
+                    e.printStackTrace();
+                }
+                finally
+                {
+                    try
+                    {
+                        in.close();
+                    }
+                    catch (IOException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         });
     }
@@ -227,5 +297,7 @@ public class Main
         {
             System.out.println("Syntax error! Check help for details (-h)");
         }
+
+        System.exit(0);
     }
 }
