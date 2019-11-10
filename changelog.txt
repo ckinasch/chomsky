@@ -1,3 +1,9 @@
+Alteration          -> Config.java  : Replace getConfig() with main constructor.
+
+Alteration          -> Main.java    : Added configuration file initialization
+
+Alteration          -> Main.java    : Pass static ArrayList references to Config.java
+________________________________________________________________________________________________________________________
 Alteration          -> Main.java    : Add and initialize config
 
 Alteration          -> Config.java  : Cleaned and simplified methods

@@ -10,10 +10,13 @@ import java.util.HashMap;
 public class Main {
     private static HashMap<String, Executable> commandMap;
 
-    static Config config;
+    private static Config config;
 
-    private static String peers = "peers";
-    private static String ids = "ids";
+    private static final String IDS = "IDS";
+    private static final String PEERS = "PEERS";
+    
+    private static ArrayList<Alias> ids = new ArrayList<>();
+    private static ArrayList<Alias> peers = new ArrayList<>();
 
 
     private static void loadCommandMap() {
@@ -32,7 +35,7 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    config.addAlias(ids);
+                    config.addAlias(IDS, ids);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -44,10 +47,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    config.removeAlias(ids);
+                    config.removeAlias(IDS, ids);
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -57,10 +60,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    config.modifyAlias(ids);
+                    config.modifyAlias(IDS, ids);
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -70,10 +73,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    System.out.println(config.listAliases(ids));
+                    System.out.println(config.listAliases(IDS, ids));
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -83,10 +86,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    config.addAlias(peers);
+                    config.addAlias(PEERS, peers);
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -96,10 +99,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    config.removeAlias(peers);
+                    config.removeAlias(PEERS, peers);
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -109,10 +112,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    config.modifyAlias(peers);
+                    config.modifyAlias(PEERS, peers);
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -122,10 +125,10 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 //TODO
                 try {
-                    System.out.println(config.listAliases(peers));
+                    System.out.println(config.listAliases(PEERS, peers));
 
                 } catch (Exception e) {
-                    System.out.println(e);
+                    e.printStackTrace();
                 }
             }
         });
@@ -250,7 +253,7 @@ public class Main {
 
     private static void initialize() throws IOException    //Initialization happens here
     {
-        config = Config.getConfig(); //initialise config file
+        config = new Config(); //initialise config file
         loadCommandMap();
     }
 

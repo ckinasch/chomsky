@@ -1,4 +1,5 @@
 import java.io.*;
+import java.util.ArrayList;
 import java.util.Properties;
 
 public class Config {
@@ -18,61 +19,50 @@ public class Config {
     // Path to config file
     private static final String CONF_PATH = "./config.cfg";
 
+    //References to properties operations
     private static Properties readConf = new Properties();
     private static Properties writeConf = new Properties();
 
     /**
-     * TODO: de/serialization, git branch PODIUM
+     * TODO: Properties CRUD operations
      */
 
-    public static Config getConfig()    //returns currently loaded config file or loads/creates file on first pass
-    {
-        if (config == null) {
-            //IF CAN LOAD CONFIG
-            try {
-                //  CONFIG = LOADCONFIG()
-                readConf.load(new FileInputStream(CONF_PATH));
-                System.out.println("Reading Config");
-            } catch (FileNotFoundException e) {
-                System.out.println("Config file not found");
-
-            } catch (IOException e) {
-                e.printStackTrace();
-                System.out.println("IO exception");
-
-            }
-            //ELSE
-
-        } else {
-            // create new config file TODO
-            config = new Config();
-
+    public Config() throws IOException {    //returns currently loaded config file or loads/creates file on first pass
+        try {
+            System.out.println("Loading configuration file");
+            readConf.load(new FileInputStream(CONF_PATH));
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+            // direct to file location???
+            createConfig();
+        } catch (IOException e) {
+            e.printStackTrace();
+            // direct to file location???
         }
+    }
 
-        return config;
+    private void createConfig() throws IOException {
+        System.out.println("Creating configuration file");
+        writeConf.store(new FileWriter(CONF_PATH), "Properties file");
     }
 
     // -a / -A : Add Alias
-    void addAlias(String args) {
-
-        System.out.println(String.format("Add %s", args));
+    void addAlias(String args, ArrayList<Alias> list) {
+        System.out.println(String.format("Add: %s", args));
     }
 
     // -r / -R : Remove Alias
-    void removeAlias(String args) {
-        System.out.println(String.format("Add %s", args));
-
+    void removeAlias(String args, ArrayList<Alias> list) {
+        System.out.println(String.format("Remove: %s", args));
     }
 
     // -m / -M : Modify Alias
-    void modifyAlias(String args) {
-        System.out.println(String.format("Add %s", args));
-
+    void modifyAlias(String args, ArrayList<Alias> list) {
+        System.out.println(String.format("Modify: %s", args));
     }
 
     // -l / -L : List Alias
-    String listAliases(String args) {
-        return String.format("Add %s", args);
+    String listAliases(String args, ArrayList<Alias> list) {
+        return String.format("List: %s", args);
     }
-
 }

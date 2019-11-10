@@ -4,8 +4,9 @@
     <list default="true" id="26c05de7-f2f1-4f6b-8160-b4fbd8647cf5" name="Default Changelist" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/changelog.txt" beforeDir="false" afterPath="$PROJECT_DIR$/changelog.txt" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/config.cfg" beforeDir="false" afterPath="$PROJECT_DIR$/config.cfg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/config.cfg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Config.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Config.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/Chomsky/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/Chomsky/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Config.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Config.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
     </list>
@@ -58,7 +59,7 @@
     <configuration name="Main 2" type="Application" factoryName="Application">
       <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="Chomsky" />
-      <option name="PROGRAM_PARAMETERS" value="-l" />
+      <option name="PROGRAM_PARAMETERS" value="-r" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
