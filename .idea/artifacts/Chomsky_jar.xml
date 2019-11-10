@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="Chomsky:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/Chomsky_jar</output-path>
-    <root id="archive" name="Chomsky.jar">
-      <element id="module-output" name="Chomsky" />
-    </root>
-  </artifact>
-</component>

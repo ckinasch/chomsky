@@ -1,17 +1,20 @@
-import java.security.Key;
+public class Alias {
+    private String id;
+    private String key;
+//    private Key key;
 
-public class Alias
-{
-    private String username;
-    private Key key;
-
-    public Alias(String username)
-    {
-        this.username = username;
+    public Alias(String id, String key) {
+        this.id = id;
+        this.key = key;
     }
 
-    String getUsername()
-    {
-        return username;
+    public Alias(String id) {
+        this.id = id;
+
     }
+
+    public String toString() {
+        return String.format("%s - %s", id, key);
+    }
+
 }
