@@ -1,0 +1,7 @@
+Add dir             -> keys : sample fingerprint files for testing
+
+Alteration          -> Alias.java : Replaces Identity.java & Peer.java classes
+
+Alteration (temp)   -> Alias.java : 'String' in place of 'Key'
+
+Alteration          -> Alias.java : Method overload (allow alteration), instance return string
