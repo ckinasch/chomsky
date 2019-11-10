@@ -2,9 +2,9 @@ CHOMSKY v0.0
 
 Help - Format chomsky <arg> <value>
 
-	-------CONFIG-------
+	-------CONFIG-------	
 
-	--interactive, 		-i
+	--interactive, 		-i 	
 
 	--add-identity,		-a
 	--remove-identity,	-r
@@ -33,4 +33,5 @@ Help - Format chomsky <arg> <value>
 	--debug,		-ddd
 	--version,		-v
 	--help,			-h
-
+	
+	
