@@ -1,0 +1,27 @@
+Alteration          -> Config.java  : Replace getConfig() with main constructor.
+
+Alteration          -> Main.java    : Added configuration file initialization
+
+Alteration          -> Main.java    : Pass static ArrayList references to Config.java
+________________________________________________________________________________________________________________________
+Alteration          -> Main.java    : Add and initialize config
+
+Alteration          -> Config.java  : Cleaned and simplified methods
+
+Alteration          -> Config.java  : Find and initialize config file
+
+Alteration          -> Main.java    : Linked commands to Config.java methods
+________________________________________________________________________________________________________________________
+Alteration          -> Config.java  : pseudo
+
+Removal             -> keys/*       :
+
+Added               -> Jyhe files   : For integrated testing with further functionality
+________________________________________________________________________________________________________________________
+Add dir             -> keys         : sample fingerprint files for testing
+
+Alteration          -> Alias.java   : Replaces Identity.java & Peer.java classes
+
+Alteration (temp)   -> Alias.java   : 'String' in place of 'Key'
+
+Alteration          -> Alias.java   : Method overload (allow alteration), instance return string
