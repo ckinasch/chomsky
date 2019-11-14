@@ -25,6 +25,7 @@ public class Config {
 
     /**
      * TODO: Properties CRUD operations
+     * TODO: Either with standard FILE I/O or with Java.Properties API
      */
 
     public Config() throws IOException {    //returns currently loaded config file or loads/creates file on first pass

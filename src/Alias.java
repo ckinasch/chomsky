@@ -1,5 +1,7 @@
 import java.security.PublicKey;
 
+//TODO: de/serialization logic for file i/o
+
 public class Alias
 {
     private String alias;

@@ -7,6 +7,7 @@ import java.net.BindException;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import net.sf.ntru.encrypt.NtruEncrypt;
 
 public class Main {
@@ -20,6 +21,7 @@ public class Main {
     private static ArrayList<Alias> ids = new ArrayList<>();
     private static ArrayList<Alias> peers = new ArrayList<>();
 
+    //TODO: a,r,m,l & A,R,M,L command operations.
 
     private static void loadCommandMap() {
         commandMap = new HashMap(); //HashMap contains the CLI identifier and command as a key value pair
@@ -35,7 +37,6 @@ public class Main {
         commandMap.put("a", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     config.addAlias(IDS, ids);
                 } catch (Exception e) {
@@ -47,7 +48,6 @@ public class Main {
         commandMap.put("r", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     config.removeAlias(IDS, ids);
 
@@ -60,7 +60,6 @@ public class Main {
         commandMap.put("m", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     config.modifyAlias(IDS, ids);
 
@@ -73,7 +72,6 @@ public class Main {
         commandMap.put("l", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     System.out.println(config.listAliases(IDS, ids));
 
@@ -86,7 +84,6 @@ public class Main {
         commandMap.put("A", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     config.addAlias(PEERS, peers);
 
@@ -99,7 +96,6 @@ public class Main {
         commandMap.put("R", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     config.removeAlias(PEERS, peers);
 
@@ -112,7 +108,6 @@ public class Main {
         commandMap.put("M", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     config.modifyAlias(PEERS, peers);
 
@@ -125,7 +120,6 @@ public class Main {
         commandMap.put("L", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
                 try {
                     System.out.println(config.listAliases(PEERS, peers));
 
@@ -192,7 +186,7 @@ public class Main {
         commandMap.put("v", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
+                //TODO output '-h line 1'
             }
         });
 
@@ -255,7 +249,8 @@ public class Main {
     private static void initialize() throws IOException    //Initialization happens here
     {
         System.out.println("Initializing");
-        //TODO Temp try catch. Make good
+        //TODO: Temp try catch. Make good
+        //TODO: wrap & route traffic in NTRUContext
         try {
             NTRUContext test = new NTRUContext();
             test.writeKeyPair("./testKP");
