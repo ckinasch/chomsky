@@ -1,20 +1,33 @@
-public class Alias {
-    private String id;
-    private String key;
-//    private Key key;
+import java.security.PublicKey;
 
-    public Alias(String id, String key) {
-        this.id = id;
-        this.key = key;
+public class Alias
+{
+    private String alias;
+    private String publicKeyUrl;
+
+    public Alias(String alias, String pub_key_url)
+    {
+        this.alias = alias;
+        this.publicKeyUrl = pub_key_url;
     }
 
-    public Alias(String id) {
-        this.id = id;
-
+    public String getAlias()
+    {
+        return alias;
     }
 
-    public String toString() {
-        return String.format("%s - %s", id, key);
+    public void setAlias(String alias)
+    {
+        this.alias = alias;
     }
 
+    public String getPublicKeyUrl()
+    {
+        return this.publicKeyUrl;
+    }
+
+    public void setPublicKeyUrl(String pub_key)
+    {
+        this.publicKeyUrl = pub_key;
+    }
 }

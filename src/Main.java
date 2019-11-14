@@ -1,3 +1,4 @@
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -6,6 +7,7 @@ import java.net.BindException;
 import java.net.ConnectException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import net.sf.ntru.encrypt.NtruEncrypt;
 
 public class Main {
     private static HashMap<String, Executable> commandMap;
@@ -14,7 +16,7 @@ public class Main {
 
     private static final String IDS = "IDS";
     private static final String PEERS = "PEERS";
-    
+
     private static ArrayList<Alias> ids = new ArrayList<>();
     private static ArrayList<Alias> peers = new ArrayList<>();
 
@@ -239,7 +241,6 @@ public class Main {
                     break;
                 }
             }
-
         }
 
         return out;
@@ -253,6 +254,16 @@ public class Main {
 
     private static void initialize() throws IOException    //Initialization happens here
     {
+        System.out.println("Initializing");
+        //TODO Temp try catch. Make good
+        try {
+            NTRUContext test = new NTRUContext();
+            test.writeKeyPair("./testKP");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+
         config = new Config(); //initialise config file
         loadCommandMap();
     }
@@ -281,7 +292,6 @@ public class Main {
         } else {
             System.out.println("Syntax error! Check help for details (-h)");
         }
-
         System.exit(0);
     }
 }
