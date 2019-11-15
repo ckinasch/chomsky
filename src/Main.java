@@ -236,7 +236,6 @@ public class Main {
                 }
             }
         }
-
         return out;
     }
 
@@ -257,9 +256,8 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
-
         config = new Config(); //initialise config file
+        //TODO: any forward facing methods from conf???
         loadCommandMap();
     }
 

@@ -11,18 +11,13 @@ public class Config {
      * https://stackoverflow.com/questions/8627951/java-file-path-in-linux
      * Get OS
      * Check for .chomsky in relevant file path
-     * <p>
-     * <p>
-     * Linux.sh & Windows.bat
-     * -> create folder structure in relevant path (/$HOME/.chomsky/) || (\$appData\.chomsky\)
-     * <p>
      * TODO: Test on windows
+     * TODO: Any outward facing methods???
      */
 
     private static Config config;
 
-
-    //Test set of keys
+/*    //Test set of keys
     static String[] dummyKeys = {
             "0j:20:4b:88:a7:9t:wd:19:f0:d4:4y:9g:27:cf:97:23",
             "fd:bc:8a:81:58:8f:2c:78:86:a2:cf:02:40:7d:9d:3c",
@@ -30,19 +25,12 @@ public class Config {
             "19:f0:d4:4y:9g:27:cf:97:23:0j:20:4b:88:a7:9t:wd",
             "78:86:a2:cf:02:40:7d:9d:3c:fd:bc:8a:81:58:8f:2c",
             "f0:d4:4y:9g:27:cf:97:23:0j:20:4b:88:a7:9t:wd:19",
-    };
+    };*/
 
-    private static String currentOS;
-
-    private static final Path CONF_PATH_LINUX = Paths.get(String.format("%s/.chomsky/", System.getProperty("user.home")));
-    private static final Path CONF_PATH_WINDOWS = Paths.get(String.format("%s/.chomsky/", System.getProperty("user.home")));
-
-
-    //References to properties operations
-    private static Properties readConf = new Properties();
-    private static Properties writeConf = new Properties();
-
-    public static String pathToConfig;
+    // Public attributes, access in main
+    public String currentOS;
+    public final Path CONF_PATH_LINUX = Paths.get(String.format("%s/.chomsky/", System.getProperty("user.home")));
+    public final Path CONF_PATH_WINDOWS = Paths.get(String.format("%s/.chomsky/", System.getProperty("user.home")));
 
     public Config() throws IOException {    //returns currently loaded config file or loads/creates file on first pass
         currentOS = System.getProperty("os.name");
@@ -55,6 +43,7 @@ public class Config {
             windowsConfig();
         }
     }
+
 
     private void linuxConfig() {
         System.out.println("Linux Detected");
@@ -89,6 +78,4 @@ public class Config {
             e.printStackTrace();
         }
     }
-
-
 }
