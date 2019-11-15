@@ -4,7 +4,14 @@ import java.util.Properties;
 
 public class Config {
 
+    /**
+     *
+     *
+     */
+
     private static Config config;
+
+
 
     //Test set of keys
     static String[] dummyKeys = {
