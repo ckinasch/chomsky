@@ -8,25 +8,45 @@ public class ChatConnection
     private DataInputStream inputStream;
     private DataOutputStream outputStream;
     private Boolean isLoggedIn;
-    public ChatConnection(String address, int port) throws IOException
+    private NTRUContext ntru_ctx;
+
+    public ChatConnection(String address, int port, Alias self) throws IOException
     {
+        this.ntru_ctx = new NTRUContext(self);
         socket = new Socket(address, port);
         inputStream = new DataInputStream(socket.getInputStream());
         outputStream = new DataOutputStream(socket.getOutputStream());
-        new Thread(new ClientChatListener()).start();
-        isLoggedIn = true;
+        // Handshake With server
+        //ntru_ctx.getKp_pub().writeTo(outputStream);
 
-        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println(String.format("%s", ntru_ctx.getKp_pub().getEncoded().length));
 
-        while (isLoggedIn)
+        byte[] buff = ntru_ctx.getKp_pub().getEncoded();
+
+        outputStream.write(buff);
+        System.out.println("HERE CC");
+
+        if (inputStream.readUTF() == "\\acc")
         {
-            if (System.in.available() > 0)
+
+            new Thread(new ClientChatListener()).start();
+            isLoggedIn = true;
+
+            BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+
+            while (isLoggedIn)
             {
-                outputStream.flush();
-                outputStream.writeUTF(reader.readLine());
+                if (System.in.available() > 0)
+                {
+                    outputStream.flush();
+                    outputStream.writeUTF(reader.readLine());
+                }
             }
         }
-
+        else
+        {
+            System.out.println(String.format("Connection rejected by %s", socket.getInetAddress().toString()));
+        }
         outputStream.close();
         inputStream.close();
         socket.close();
