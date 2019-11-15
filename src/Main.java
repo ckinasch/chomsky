@@ -38,7 +38,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.addAlias(IDS, ids);
+//                    config.addAlias(IDS, ids);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -49,7 +49,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.removeAlias(IDS, ids);
+//                    config.removeAlias(IDS, ids);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -61,7 +61,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.modifyAlias(IDS, ids);
+//                    config.modifyAlias(IDS, ids);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -73,7 +73,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    System.out.println(config.listAliases(IDS, ids));
+//                    System.out.println(config.listAliases(IDS, ids));
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -85,7 +85,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.addAlias(PEERS, peers);
+//                    config.addAlias(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -97,7 +97,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.removeAlias(PEERS, peers);
+//                    config.removeAlias(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -109,7 +109,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.modifyAlias(PEERS, peers);
+//                    config.modifyAlias(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -121,7 +121,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    System.out.println(config.listAliases(PEERS, peers));
+//                    System.out.println(config.listAliases(PEERS, peers));
 
                 } catch (Exception e) {
                     e.printStackTrace();
