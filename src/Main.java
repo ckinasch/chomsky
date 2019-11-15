@@ -140,7 +140,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    new ChatConnection(args.get(0), Integer.parseInt(args.get(1)));
+                    new ChatConnection(args.get(0), Integer.parseInt(args.get(1)), ids.get(0));
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
                 } catch (ConnectException e) {
@@ -163,7 +163,7 @@ public class Main {
             public void execute(ArrayList<String> args) {
                 try {
                     new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
-                    new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)));
+                    new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)), ids.get(0));
                 } catch (ConnectException e) {
                     System.out.println("Connection Error: " + e.getLocalizedMessage());
                 } catch (NumberFormatException e) {
@@ -171,6 +171,9 @@ public class Main {
                 } catch (BindException e) {
                     System.out.println("Unable to bind to port " + args.get(0));
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (IndexOutOfBoundsException e)
+                {
                     e.printStackTrace();
                 }
             }
@@ -250,15 +253,12 @@ public class Main {
         System.out.println("Initializing");
         //TODO: Temp try catch. Make good
         //TODO: wrap & route traffic in NTRUContext
-        try {
-            NTRUContext test = new NTRUContext();
-            test.writeKeyPair("./testKP");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         config = new Config(); //initialise config file
         //TODO: any forward facing methods from conf???
         loadCommandMap();
+
+        ids.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
     }
 
     private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments
@@ -278,6 +278,12 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         ArrayList<ArrayList<String>> argsArray = splitArgs(args);    //Split args into [arg][param] array
+
+        //FOR TESTING PURPOSES
+        NTRUContext tmp = new NTRUContext();
+
+        tmp.writeKeyPair(String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home")));
+
 
         if (validate(argsArray)) {
             initialize();
