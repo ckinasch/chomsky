@@ -16,44 +16,48 @@ public class ChatRoom implements Runnable
 {
     private Socket socket;
     private ServerSocket serverSocket;
-    private ArrayList<Alias> peers_list;
-    ArrayList<Client> connectedClients;
+    private ArrayListExtended<Alias> peers_list;
+    ArrayListExtended<Client> connectedClients;
     Boolean serverIsRunning;
     NTRUContext ntru_ctx;
 
     public ChatRoom(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
-        connectedClients = new ArrayList<>();
+        connectedClients = new ArrayListExtended<>();
         this.ntru_ctx = new NTRUContext();
     }
 
-    public ChatRoom(int port, ArrayList<Alias> peers) throws IOException
+    public ChatRoom(int port, ArrayListExtended<Alias> peers) throws IOException
     {
         serverSocket = new ServerSocket(port);
-        connectedClients = new ArrayList<>();
+        connectedClients = new ArrayListExtended<>();
         this.ntru_ctx = new NTRUContext();
-        if (peers != null)
+        peers_list = new ArrayListExtended<>();
+        if (peers != null || peers.size() != 0)
         {
-            peers_list = AppendPeer(peers, this.ntru_ctx);
+            peers_list = AppendPeers(peers, ntru_ctx);
         }
     }
 
-    public ArrayList<Alias> AppendPeer(ArrayList<Alias> peers_list, NTRUContext ctx)
+    public ArrayListExtended<Alias> AppendPeers(ArrayListExtended<Alias> peers_list, NTRUContext ctx)
     {
-         if (peers_list == null || peers_list.size() == 0)
-         {
-             return new ArrayList<Alias>();
-         }
-         else
-         {
+        if (peers_list.head() != null)
+        {
+            NTRUContext ctx_copy = ctx.copy();
+            ctx_copy.setPeer_kp(peers_list.head());
 
-             ArrayList<Alias> temp_list = new ArrayList<Alias>();
-             ctx.setPeer_kp(peers_list.get(0));
-             temp_list.add(new Alias(peers_list.get(0).getAlias(), ctx));
-             temp_list.addAll(AppendPeer(new ArrayList<Alias>(peers_list.subList(1, peers_list.size())), ctx));
-             return temp_list;
-         }
+            return new ArrayListExtended<>(){
+                {
+                    add(new Alias(peers_list.head().getAlias(), ctx_copy));
+                    append(AppendPeers(peers_list.tail(), ctx));
+                }
+            };
+        }
+        else
+        {
+            return peers_list.tail();
+        }
     }
 
     @Override
@@ -75,13 +79,15 @@ public class ChatRoom implements Runnable
                 EncryptionPublicKey temp_pub_key = new EncryptionPublicKey(buff);
                 Client client;
 
+
+
                 if (peers_list != null && arrayContains(peers_list, temp_pub_key))
                 {
                     client = new Client(socket, peers_list.get(arrayInstanceIndex(peers_list, temp_pub_key)));
                 }
                 else if (peers_list != null)
                 {
-                    System.out.println(String.format("Connection from peer: %s : rejected", socket.getInetAddress().toString()));
+                    System.out.println(String.format("Connection from peer: %s - rejected (publicKey)", socket.getInetAddress().toString()));
                     outputStream.writeUTF("//rej");
                     socket.close();
                     continue outer;
@@ -121,31 +127,37 @@ public class ChatRoom implements Runnable
         }
     }
 
-    private Boolean arrayContains(ArrayList<Alias> subject, EncryptionPublicKey comp)
+    private Boolean arrayContains(ArrayListExtended<Alias> subject, EncryptionPublicKey comp)
     {
         if (subject == null || subject.size() == 0)
         {
             return false;
         }
-        if (comp.equals(subject.get(subject.size()-1).getNtru_ctx().getPeer_kp()))
+        if (subject.last().getNtru_ctx().getPeer_kp().equals(comp))
         {
+
             return true;
         }
         else
         {
-            return arrayContains(new ArrayList<Alias>(subject.subList(0, subject.size()-1)), comp);
+
+            return arrayContains(subject.body(), comp);
         }
     }
 
-    private int arrayInstanceIndex(ArrayList<Alias> subject, EncryptionPublicKey comp)
+    private int arrayInstanceIndex(ArrayListExtended<Alias> subject, EncryptionPublicKey comp)
     {
-        if (comp.equals(subject.get(subject.size()-1).getNtru_ctx().getPeer_kp()))
+        if (subject == null || subject.size() == 0)
+        {
+            return -1;
+        }
+        if (comp.equals(subject.last().getNtru_ctx().getPeer_kp()))
         {
             return subject.size()-1;
         }
         else
         {
-            return arrayInstanceIndex(new ArrayList<Alias>(subject.subList(0, subject.size()-1)), comp);
+            return arrayInstanceIndex(subject.body(), comp);
         }
     }
 
