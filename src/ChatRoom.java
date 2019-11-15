@@ -5,6 +5,7 @@ import javax.security.auth.kerberos.EncryptionKey;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.NoSuchObjectException;
@@ -18,7 +19,7 @@ public class ChatRoom implements Runnable
     private ArrayList<Alias> peers_list;
     ArrayList<Client> connectedClients;
     Boolean serverIsRunning;
-    NTRUContext ntru_ctx = new NTRUContext();
+    NTRUContext ntru_ctx;
 
     public ChatRoom(int port) throws IOException
     {
@@ -27,27 +28,31 @@ public class ChatRoom implements Runnable
         this.ntru_ctx = new NTRUContext();
     }
 
-    public ChatRoom(int port, Alias[] peers) throws IOException
+    public ChatRoom(int port, ArrayList<Alias> peers) throws IOException
     {
         serverSocket = new ServerSocket(port);
         connectedClients = new ArrayList<>();
         this.ntru_ctx = new NTRUContext();
-        peers_list = AppendPeer(peers, this.ntru_ctx);
+        if (peers != null)
+        {
+            peers_list = AppendPeer(peers, this.ntru_ctx);
+        }
     }
 
-    public ArrayList<Alias> AppendPeer(Alias[] peers_list, NTRUContext ctx)
+    public ArrayList<Alias> AppendPeer(ArrayList<Alias> peers_list, NTRUContext ctx)
     {
-         if (peers_list != null)
+         if (peers_list == null || peers_list.size() == 0)
          {
-             ArrayList<Alias> temp_list = new ArrayList<Alias>();
-             ctx.setPeer_kp(peers_list[0]);
-             temp_list.add(new Alias(peers_list[0].getAlias(), ctx));
-             temp_list.addAll(AppendPeer(Arrays.copyOfRange(peers_list, 1, peers_list.length), ctx));
-             return temp_list;
-        }
+             return new ArrayList<Alias>();
+         }
          else
          {
-             return null;
+
+             ArrayList<Alias> temp_list = new ArrayList<Alias>();
+             ctx.setPeer_kp(peers_list.get(0));
+             temp_list.add(new Alias(peers_list.get(0).getAlias(), ctx));
+             temp_list.addAll(AppendPeer(new ArrayList<Alias>(peers_list.subList(1, peers_list.size())), ctx));
+             return temp_list;
          }
     }
 
@@ -61,48 +66,39 @@ public class ChatRoom implements Runnable
         {
             try
             {
-
                 socket = serverSocket.accept();
                 DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 
                 byte[] buff = inputStream.readNBytes(2066);
 
-                System.out.println(buff.length);
-
                 EncryptionPublicKey temp_pub_key = new EncryptionPublicKey(buff);
-                System.out.println("HERE CR");
+                Client client;
 
-                if (peers_list != null)
+                if (peers_list != null && arrayContains(peers_list, temp_pub_key))
                 {
-                    for (int p = 0; p < peers_list.size() ; p++)
-                    {
-                        if(temp_pub_key.equals(peers_list.get(p).getNtru_ctx().getPeer_kp()))
-                        {
-                            Client client = new Client(socket, peers_list.get(p));
-                            Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
-                            connectedClients.add(client);
-                            clientHandler.start();
-                            sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
-                            continue outer;
-                        }
-                    }
+                    client = new Client(socket, peers_list.get(arrayInstanceIndex(peers_list, temp_pub_key)));
+                }
+                else if (peers_list != null)
+                {
+                    System.out.println(String.format("Connection from peer: %s : rejected", socket.getInetAddress().toString()));
+                    outputStream.writeUTF("//rej");
+                    socket.close();
+                    continue outer;
                 }
                 else
                 {
                     NTRUContext tmp = this.ntru_ctx;
                     tmp.setPeer_kp(temp_pub_key);
-                    Client client = new Client(socket, tmp);
-                    Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
-                    connectedClients.add(client);
-                    clientHandler.start();
-                    sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
-                    continue outer;
+                    client = new Client(socket, tmp);
                 }
 
-
-                System.out.println(String.format("Connection from peer: %s : rejected", socket.getInetAddress().toString()));
-                socket.getOutputStream().write("//rej".getBytes());
+                Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
+                connectedClients.add(client);
+                clientHandler.start();
+                sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
                 continue outer;
+
                 //TODO Identity Verification
                 //if identity is verified
                 //sendServerMessage(String.format("%s verified", username));
@@ -122,6 +118,34 @@ public class ChatRoom implements Runnable
         catch(IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    private Boolean arrayContains(ArrayList<Alias> subject, EncryptionPublicKey comp)
+    {
+        if (subject == null || subject.size() == 0)
+        {
+            return false;
+        }
+        if (comp.equals(subject.get(subject.size()-1).getNtru_ctx().getPeer_kp()))
+        {
+            return true;
+        }
+        else
+        {
+            return arrayContains(new ArrayList<Alias>(subject.subList(0, subject.size()-1)), comp);
+        }
+    }
+
+    private int arrayInstanceIndex(ArrayList<Alias> subject, EncryptionPublicKey comp)
+    {
+        if (comp.equals(subject.get(subject.size()-1).getNtru_ctx().getPeer_kp()))
+        {
+            return subject.size()-1;
+        }
+        else
+        {
+            return arrayInstanceIndex(new ArrayList<Alias>(subject.subList(0, subject.size()-1)), comp);
         }
     }
 

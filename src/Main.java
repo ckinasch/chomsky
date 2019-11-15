@@ -3,9 +3,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.BindException;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import net.sf.ntru.encrypt.NtruEncrypt;
@@ -162,7 +164,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
+                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)), getAliasArray(args.get(1)))).start();
                     new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)), ids.get(0));
                 } catch (ConnectException e) {
                     System.out.println("Connection Error: " + e.getLocalizedMessage());
@@ -219,6 +221,71 @@ public class Main {
         });
     }
 
+    private static ArrayList<Alias> getAliasArray(String list)
+    {
+        if (list == null || list.length() == 0)
+        {
+            return new ArrayList<Alias>();
+        }
+        else
+        {
+            ArrayList tmp = new ArrayList();
+            String[] listArray = list.split(",");
+            try
+            {
+                // Need alias not found error handling
+
+                tmp.add(peers.get(instanceOf(peers, listArray[0])));
+                tmp.addAll(getAliasArray(Arrays.copyOfRange(listArray,1, listArray.length)));
+
+            } catch(IndexOutOfBoundsException e)
+            {
+                System.out.println(String.format("Peer %s not found", listArray[0]));
+                System.exit(1);
+            }
+
+            return tmp;
+        }
+    }
+
+    private static ArrayList<Alias> getAliasArray(String[] listArray)
+    {
+        if (listArray == null || listArray.length == 0)
+        {
+            return new ArrayList<Alias>();
+        }
+        else
+        {
+            ArrayList tmp = new ArrayList();
+            try {
+                // Need alias not found error handling
+                tmp.add(peers.get(instanceOf(peers, listArray[0])));
+                tmp.addAll(getAliasArray(Arrays.copyOfRange(listArray,1, listArray.length)));
+
+            } catch (IndexOutOfBoundsException e) {
+                e.printStackTrace();
+            }
+
+            return tmp;
+        }
+    }
+
+    private static int instanceOf(ArrayList<Alias> subject, String comp)
+    {
+        if (subject == null)
+        {
+            return -1;
+        }
+        else if (subject.get(subject.size()-1).toString().equals(comp))
+        {
+            return subject.size()-1;
+        }
+        else
+        {
+            return instanceOf(new ArrayList<Alias>(subject.subList(0, subject.size()-1)), comp);
+        }
+    }
+
     private static ArrayList<ArrayList<String>> splitArgs(String[] args) {
         ArrayList<ArrayList<String>> out = new ArrayList();
 
@@ -259,6 +326,9 @@ public class Main {
         loadCommandMap();
 
         ids.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
+        peers.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
+        peers.add(new Alias("john", String.format("%s/.chomsky/peers/john.key", System.getProperty("user.home"))));
+
     }
 
     private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments
