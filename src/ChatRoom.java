@@ -40,26 +40,6 @@ public class ChatRoom implements Runnable
         }
     }
 
-    public ArrayListExtended<Alias> AppendPeers(ArrayListExtended<Alias> peers_list, NTRUContext ctx)
-    {
-        if (peers_list.head() != null)
-        {
-            NTRUContext ctx_copy = ctx.copy();
-            ctx_copy.setPeer_kp(peers_list.head());
-
-            return new ArrayListExtended<>(){
-                {
-                    add(new Alias(peers_list.head().getAlias(), ctx_copy));
-                    append(AppendPeers(peers_list.tail(), ctx));
-                }
-            };
-        }
-        else
-        {
-            return peers_list.tail();
-        }
-    }
-
     @Override
     public void run()   //Thread listens for client connections
     {
@@ -126,6 +106,27 @@ public class ChatRoom implements Runnable
             e.printStackTrace();
         }
     }
+
+    public ArrayListExtended<Alias> AppendPeers(ArrayListExtended<Alias> peers_list, NTRUContext ctx)
+    {
+        if (peers_list.head() != null)
+        {
+            NTRUContext ctx_copy = ctx.copy();
+            ctx_copy.setPeer_kp(peers_list.head());
+
+            return new ArrayListExtended<>(){
+                {
+                    add(new Alias(peers_list.head().getAlias(), ctx_copy));
+                    append(AppendPeers(peers_list.tail(), ctx));
+                }
+            };
+        }
+        else
+        {
+            return peers_list.tail();
+        }
+    }
+
 
     private Boolean arrayContains(ArrayListExtended<Alias> subject, EncryptionPublicKey comp)
     {
