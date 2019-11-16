@@ -3,9 +3,11 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.BindException;
 import java.net.ConnectException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import net.sf.ntru.encrypt.NtruEncrypt;
@@ -18,8 +20,8 @@ public class Main {
     private static final String IDS = "IDS";
     private static final String PEERS = "PEERS";
 
-    private static ArrayList<Alias> ids = new ArrayList<>();
-    private static ArrayList<Alias> peers = new ArrayList<>();
+    private static ArrayListExtended<Alias> ids = new ArrayListExtended<>();
+    private static ArrayListExtended<Alias> peers = new ArrayListExtended<>();
 
     //TODO: a,r,m,l & A,R,M,L command operations.
 
@@ -162,9 +164,18 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
+                    if (args.size() == 1)
+                    {
+                        new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
+                    }
+                    else
+                    {
+                        new Thread(new ChatRoom(Integer.parseInt(args.get(0)), getAliasArray(args.get(1)))).start();
+                    }
+
                     new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)), ids.get(0));
-                } catch (ConnectException e) {
+                }
+                catch (ConnectException e) {
                     System.out.println("Connection Error: " + e.getLocalizedMessage());
                 } catch (NumberFormatException e) {
                     e.printStackTrace();
@@ -219,6 +230,63 @@ public class Main {
         });
     }
 
+    private static ArrayListExtended<Alias> getAliasArray(String list)
+    {
+        ArrayListExtended tmp = new ArrayListExtended();
+        ArrayListExtended<String> listArray = new ArrayListExtended<String>(Arrays.asList(list.split(",")));
+        // Need alias not found error handling
+        if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1)
+        {
+            tmp.add(peers.get(instanceOf(peers, listArray.head())));
+            return tmp.append(getAliasArray(listArray.tail()));
+        }
+        else if (listArray.head() != null)
+        {
+            System.out.println(String.format("Peer: %s - not found", listArray.head()));
+            return tmp.append(getAliasArray(listArray.tail()));
+        }
+        else
+        {
+            return new ArrayListExtended<>();
+        }
+    }
+
+    private static ArrayListExtended<Alias> getAliasArray(ArrayListExtended<String> listArray)
+    {
+        ArrayListExtended tmp = new ArrayListExtended();
+            // Need alias not found error handling
+        if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1)
+        {
+            tmp.add(peers.get(instanceOf(peers, listArray.head())));
+            return tmp.append(getAliasArray(listArray.tail()));
+        }
+        else if (listArray.head() != null)
+        {
+            System.out.println(String.format("Peer: %s - not found", listArray.head()));
+            return tmp.append(getAliasArray(listArray.tail()));
+        }
+        else
+        {
+            return new ArrayListExtended<>();
+        }
+    }
+
+    private static int instanceOf(ArrayListExtended<Alias> subject, String comp)
+    {
+        if (subject == null || subject.size() == 0)
+        {
+            return -1;
+        }
+        else if (subject.last().equals(comp))
+        {
+            return subject.size()-1;
+        }
+        else
+        {
+            return instanceOf(subject.body(), comp);
+        }
+    }
+
     private static ArrayList<ArrayList<String>> splitArgs(String[] args) {
         ArrayList<ArrayList<String>> out = new ArrayList();
 
@@ -259,6 +327,9 @@ public class Main {
         loadCommandMap();
 
         ids.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
+        peers.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
+        peers.add(new Alias("john", String.format("%s/.chomsky/peers/john.key", System.getProperty("user.home"))));
+
     }
 
     private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments

@@ -36,4 +36,19 @@ public class Alias {
     public NTRUContext getNtru_ctx() {
         return ntru_ctx;
     }
+
+    @Override
+    public String toString() {
+        return alias;
+    }
+
+    @Override
+    public boolean equals(Object o)
+    {
+        if (this.toString().equals(o))
+        {
+            return true;
+        }
+        else { return false; }
+    }
 }

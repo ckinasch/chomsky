@@ -19,16 +19,10 @@ public class ChatConnection
         // Handshake With server
         //ntru_ctx.getKp_pub().writeTo(outputStream);
 
-        System.out.println(String.format("%s", ntru_ctx.getKp_pub().getEncoded().length));
+        outputStream.write(ntru_ctx.getKp_pub().getEncoded());
 
-        byte[] buff = ntru_ctx.getKp_pub().getEncoded();
-
-        outputStream.write(buff);
-        System.out.println("HERE CC");
-
-        if (inputStream.readUTF() == "\\acc")
+        if (inputStream.readUTF().equals("\\acc"))
         {
-
             new Thread(new ClientChatListener()).start();
             isLoggedIn = true;
 
