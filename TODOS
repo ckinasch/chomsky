@@ -1,12 +1,13 @@
-Boiler plate methods are created and found
-    - Full file I/O
-    Will the strings need to be encrypted before writing?
-
 Chat connection needs to be tunneled through NTRUContext methods (encrypt, decrypt).
     NTRU instance created inside try/catch in Main.initialize();
 
 Input validation functions (regex operations)
+    - Ports
+    - IPs
+    - String cleaning
+    - Valid Keys format (2066)
 
-Linux.sh & Windows.bat
-    -> create folder structure in relevant path (/$HOME/.chomsky/) || (\$appData\.chomsky\)
+I/O Peers & Ids
+    - '~/.chomsky/peers' && '~/.chomsky/ids'
+
 
