@@ -5,6 +5,7 @@ import javax.security.auth.kerberos.EncryptionKey;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.rmi.NoSuchObjectException;
@@ -15,40 +16,28 @@ public class ChatRoom implements Runnable
 {
     private Socket socket;
     private ServerSocket serverSocket;
-    private ArrayList<Alias> peers_list;
-    ArrayList<Client> connectedClients;
+    private ArrayListExtended<Alias> peers_list;
+    ArrayListExtended<Client> connectedClients;
     Boolean serverIsRunning;
-    NTRUContext ntru_ctx = new NTRUContext();
+    NTRUContext ntru_ctx;
 
     public ChatRoom(int port) throws IOException
     {
         serverSocket = new ServerSocket(port);
-        connectedClients = new ArrayList<>();
+        connectedClients = new ArrayListExtended<>();
         this.ntru_ctx = new NTRUContext();
     }
 
-    public ChatRoom(int port, Alias[] peers) throws IOException
+    public ChatRoom(int port, ArrayListExtended<Alias> peers) throws IOException
     {
         serverSocket = new ServerSocket(port);
-        connectedClients = new ArrayList<>();
+        connectedClients = new ArrayListExtended<>();
         this.ntru_ctx = new NTRUContext();
-        peers_list = AppendPeer(peers, this.ntru_ctx);
-    }
-
-    public ArrayList<Alias> AppendPeer(Alias[] peers_list, NTRUContext ctx)
-    {
-         if (peers_list != null)
-         {
-             ArrayList<Alias> temp_list = new ArrayList<Alias>();
-             ctx.setPeer_kp(peers_list[0]);
-             temp_list.add(new Alias(peers_list[0].getAlias(), ctx));
-             temp_list.addAll(AppendPeer(Arrays.copyOfRange(peers_list, 1, peers_list.length), ctx));
-             return temp_list;
+        peers_list = new ArrayListExtended<>();
+        if (peers != null || peers.size() != 0)
+        {
+            peers_list = AppendPeers(peers, ntru_ctx);
         }
-         else
-         {
-             return null;
-         }
     }
 
     @Override
@@ -61,48 +50,41 @@ public class ChatRoom implements Runnable
         {
             try
             {
-
                 socket = serverSocket.accept();
                 DataInputStream inputStream = new DataInputStream(socket.getInputStream());
+                DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 
                 byte[] buff = inputStream.readNBytes(2066);
 
-                System.out.println(buff.length);
-
                 EncryptionPublicKey temp_pub_key = new EncryptionPublicKey(buff);
-                System.out.println("HERE CR");
+                Client client;
 
-                if (peers_list != null)
+
+
+                if (peers_list != null && arrayContains(peers_list, temp_pub_key))
                 {
-                    for (int p = 0; p < peers_list.size() ; p++)
-                    {
-                        if(temp_pub_key.equals(peers_list.get(p).getNtru_ctx().getPeer_kp()))
-                        {
-                            Client client = new Client(socket, peers_list.get(p));
-                            Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
-                            connectedClients.add(client);
-                            clientHandler.start();
-                            sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
-                            continue outer;
-                        }
-                    }
+                    client = new Client(socket, peers_list.get(arrayInstanceIndex(peers_list, temp_pub_key)));
+                }
+                else if (peers_list != null)
+                {
+                    System.out.println(String.format("Connection from peer: %s - rejected (publicKey)", socket.getInetAddress().toString()));
+                    outputStream.writeUTF("//rej");
+                    socket.close();
+                    continue outer;
                 }
                 else
                 {
                     NTRUContext tmp = this.ntru_ctx;
                     tmp.setPeer_kp(temp_pub_key);
-                    Client client = new Client(socket, tmp);
-                    Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
-                    connectedClients.add(client);
-                    clientHandler.start();
-                    sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
-                    continue outer;
+                    client = new Client(socket, tmp);
                 }
 
-
-                System.out.println(String.format("Connection from peer: %s : rejected", socket.getInetAddress().toString()));
-                socket.getOutputStream().write("//rej".getBytes());
+                Thread clientHandler = new Thread(client);  //Each client is assigned their own handler
+                connectedClients.add(client);
+                clientHandler.start();
+                sendServerMessage(String.format("Receiving connection from %s", socket.getInetAddress().toString()));
                 continue outer;
+
                 //TODO Identity Verification
                 //if identity is verified
                 //sendServerMessage(String.format("%s verified", username));
@@ -122,6 +104,61 @@ public class ChatRoom implements Runnable
         catch(IOException e)
         {
             e.printStackTrace();
+        }
+    }
+
+    public ArrayListExtended<Alias> AppendPeers(ArrayListExtended<Alias> peers_list, NTRUContext ctx)
+    {
+        if (peers_list.head() != null)
+        {
+            NTRUContext ctx_copy = ctx.copy();
+            ctx_copy.setPeer_kp(peers_list.head());
+
+            return new ArrayListExtended<>(){
+                {
+                    add(new Alias(peers_list.head().getAlias(), ctx_copy));
+                    append(AppendPeers(peers_list.tail(), ctx));
+                }
+            };
+        }
+        else
+        {
+            return peers_list.tail();
+        }
+    }
+
+
+    private Boolean arrayContains(ArrayListExtended<Alias> subject, EncryptionPublicKey comp)
+    {
+        if (subject == null || subject.size() == 0)
+        {
+            return false;
+        }
+        if (subject.last().getNtru_ctx().getPeer_kp().equals(comp))
+        {
+
+            return true;
+        }
+        else
+        {
+
+            return arrayContains(subject.body(), comp);
+        }
+    }
+
+    private int arrayInstanceIndex(ArrayListExtended<Alias> subject, EncryptionPublicKey comp)
+    {
+        if (subject == null || subject.size() == 0)
+        {
+            return -1;
+        }
+        if (comp.equals(subject.last().getNtru_ctx().getPeer_kp()))
+        {
+            return subject.size()-1;
+        }
+        else
+        {
+            return arrayInstanceIndex(subject.body(), comp);
         }
     }
 

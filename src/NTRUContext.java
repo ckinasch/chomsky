@@ -48,6 +48,11 @@ public class NTRUContext {
         this.kp = ntru_ctx.generateKeyPair();
     }
 
+    public NTRUContext(EncryptionKeyPair e)
+    {
+        this.kp = e;
+    }
+
     public void writeKeyPair(String file_path)
     {
         EncryptionKeyPair kp = this.ntru_ctx.generateKeyPair();
@@ -97,5 +102,10 @@ public class NTRUContext {
 
     public EncryptionPublicKey getPeer_kp() {
         return peer_kp;
+    }
+
+    public NTRUContext copy()
+    {
+        return new NTRUContext(this.kp);
     }
 }
