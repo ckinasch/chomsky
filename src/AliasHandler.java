@@ -10,9 +10,6 @@ public class AliasHandler {
      * Home for 'arml' switch operations, and 'id / peer' arraylist's population at run time
      */
 
-    private static String idsPath = String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home"));
-    private static String peersPath = String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home"));
-
     // -a / -A : Add Alias
     static void addAlias(String args, ArrayList<Alias> list) {
         String[] temp = args.split(" ");

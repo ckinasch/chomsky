@@ -1,7 +1,3 @@
-import net.sf.ntru.encrypt.EncryptionPublicKey;
-import net.sf.ntru.encrypt.NtruEncrypt;
-
-//TODO: de/serialization logic for file i/o
 public class Alias {
     private String alias;
     private String publicKeyUrl;
@@ -21,16 +17,9 @@ public class Alias {
         return alias;
     }
 
-    public void setAlias(String alias) {
-        this.alias = alias;
-    }
 
     public String getPublicKeyUrl() {
         return this.publicKeyUrl;
-    }
-
-    public void setPublicKeyUrl(String pub_key) {
-        this.publicKeyUrl = pub_key;
     }
 
     public NTRUContext getNtru_ctx() {
@@ -43,12 +32,11 @@ public class Alias {
     }
 
     @Override
-    public boolean equals(Object o)
-    {
-        if (this.toString().equals(o))
-        {
+    public boolean equals(Object o) {
+        if (this.toString().equals(o)) {
             return true;
+        } else {
+            return false;
         }
-        else { return false; }
     }
 }
