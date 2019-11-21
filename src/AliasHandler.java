@@ -85,7 +85,6 @@ public class AliasHandler {
         }
         listPeers.close();
 
-
         return String.format("List: A - %s ; B - %s", a, b);
     }
 }
