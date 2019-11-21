@@ -23,8 +23,6 @@ public class Main {
     private static ArrayListExtended<Alias> ids = new ArrayListExtended<>();
     private static ArrayListExtended<Alias> peers = new ArrayListExtended<>();
 
-    //TODO: a,r,m,l & A,R,M,L command operations.
-
     private static void loadCommandMap() {
         commandMap = new HashMap(); //HashMap contains the CLI identifier and command as a key value pair
 
@@ -51,7 +49,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.removeAlias(IDS, ids);
+                    AliasHandler.removeAlias(args.get(0), ids);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -75,7 +73,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.listAliases(ids,peers);
+                    AliasHandler.listAliases(IDS, ids);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -85,12 +83,9 @@ public class Main {
         commandMap.put("A", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                if (isInstanceOf(peers, args.get(0)))
-                {
+                if (isInstanceOf(peers, args.get(0))) {
                     System.out.println(String.format("Peer->%s already exists", args.get(0)));
-                }
-                else
-                {
+                } else {
                     try {
                         peers.add(new Alias(args.get(0), args.get(1)));
                         AliasHandler.writePeerAliases(peers);
@@ -105,7 +100,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.removeAlias(PEERS, peers);
+                    AliasHandler.removeAlias(args.get(0), peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -129,7 +124,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.listAliases(ids, peers);
+                    AliasHandler.listAliases(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -141,18 +136,16 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 String keyPath = String.format("%s/.chomsky/ids/%s_private.key", System.getProperty("user.home"), args.get(0));
-                if (isInstanceOf(ids, args.get(0)))
-                {
-                       System.out.println(String.format("ID->%s already exists", args.get(0)));
-                }
-                else
-                {
+                if (isInstanceOf(ids, args.get(0))) {
+                    System.out.println(String.format("ID->%s already exists", args.get(0)));
+                } else {
                     NTRUContext ctx = new NTRUContext();
                     ctx.writeKeyPair(keyPath);
                     ids.add(new Alias(args.get(0), keyPath));
 
                     AliasHandler.writeIdsAliases(ids);
                 }
+
             }
         });
 
@@ -182,27 +175,18 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    if (args.size() == 1)
-                    {
+                    if (args.size() == 1) {
                         new Thread(new ChatRoom(Integer.parseInt(args.get(0)))).start();
-                    }
-                    else
-                    {
+                    } else {
                         new Thread(new ChatRoom(Integer.parseInt(args.get(0)), getAliasArray(args.get(1)).append(ids.get(0)))).start();
                     }
 
                     new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)), ids.get(0));
-                }
-                catch (ConnectException e) {
+                } catch (ConnectException e) {
                     System.out.println("Connection Error: " + e.getLocalizedMessage());
-                } catch (NumberFormatException e) {
-                    e.printStackTrace();
                 } catch (BindException e) {
                     System.out.println("Unable to bind to port " + args.get(0));
-                } catch (IOException e) {
-                    e.printStackTrace();
-                } catch (IndexOutOfBoundsException e)
-                {
+                } catch (NumberFormatException | IndexOutOfBoundsException | IOException e) {
                     e.printStackTrace();
                 }
             }
@@ -248,75 +232,51 @@ public class Main {
         });
     }
 
-    private static ArrayListExtended<Alias> getAliasArray(String list)
-    {
+    private static ArrayListExtended<Alias> getAliasArray(String list) {
         ArrayListExtended tmp = new ArrayListExtended();
-        ArrayListExtended<String> listArray = new ArrayListExtended<String>(Arrays.asList(list .split(",")));
+        ArrayListExtended<String> listArray = new ArrayListExtended<String>(Arrays.asList(list.split(",")));
         // Need alias not found error handling
-        if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1)
-        {
+        if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1) {
             tmp.add(peers.get(instanceOf(peers, listArray.head())));
             return tmp.append(getAliasArray(listArray.tail()));
-        }
-        else if (listArray.head() != null)
-        {
+        } else if (listArray.head() != null) {
             System.out.println(String.format("Peer: %s - not found", listArray.head()));
             return tmp.append(getAliasArray(listArray.tail()));
-        }
-        else
-        {
+        } else {
             return new ArrayListExtended<>();
         }
     }
 
-    private static ArrayListExtended<Alias> getAliasArray(ArrayListExtended<String> listArray)
-    {
+    private static ArrayListExtended<Alias> getAliasArray(ArrayListExtended<String> listArray) {
         ArrayListExtended tmp = new ArrayListExtended();
-            // Need alias not found error handling
-        if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1)
-        {
+        // Need alias not found error handling
+        if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1) {
             tmp.add(peers.get(instanceOf(peers, listArray.head())));
             return tmp.append(getAliasArray(listArray.tail()));
-        }
-        else if (listArray.head() != null)
-        {
+        } else if (listArray.head() != null) {
             System.out.println(String.format("Peer: %s - not found", listArray.head()));
             return tmp.append(getAliasArray(listArray.tail()));
-        }
-        else
-        {
+        } else {
             return new ArrayListExtended<>();
         }
     }
 
-    private static int instanceOf(ArrayListExtended<Alias> subject, String comp)
-    {
-        if (subject == null || subject.size() == 0)
-        {
+    private static int instanceOf(ArrayListExtended<Alias> subject, String comp) {
+        if (subject == null || subject.size() == 0) {
             return -1;
-        }
-        else if (subject.last().equals(comp))
-        {
-            return subject.size()-1;
-        }
-        else
-        {
+        } else if (subject.last().equals(comp)) {
+            return subject.size() - 1;
+        } else {
             return instanceOf(subject.body(), comp);
         }
     }
 
-    private static boolean isInstanceOf(ArrayListExtended<Alias> subject, String comp)
-    {
-        if (subject == null || subject.size() == 0)
-        {
+    private static boolean isInstanceOf(ArrayListExtended<Alias> subject, String comp) {
+        if (subject == null || subject.size() == 0) {
             return false;
-        }
-        else if (subject.last().equals(comp))
-        {
+        } else if (subject.last().equals(comp)) {
             return true;
-        }
-        else
-        {
+        } else {
             return isInstanceOf(subject.body(), comp);
         }
     }
@@ -345,7 +305,6 @@ public class Main {
     }
 
     private static boolean validate(ArrayList<ArrayList<String>> argsArray) {
-        //TODO
         //All argument validation happens here
         return true;
     }
@@ -353,37 +312,29 @@ public class Main {
     private static void initialize() throws IOException    //Initialization happens here
     {
         System.out.println("Initializing");
-        //TODO: Temp try catch. Make good
-        //TODO: wrap & route traffic in NTRUContext
 
         config = new Config(); //initialise config file
-        //TODO: any forward facing methods from conf???
         loadCommandMap();
 
+
+
         File f = new File(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")));
-        if (f.exists())
-        {
+        if (f.exists()) {
             ids.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")))));
-        }
-        else
-        {
+        } else {
             FileOutputStream fos = new FileOutputStream(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")));
             fos.write("".getBytes());
             fos.close();
         }
         File ff = new File(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")));
-        if (ff.exists())
-        {
+        if (ff.exists()) {
             peers.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")))));
-        }
-        else
-        {
+        } else {
             FileOutputStream fos = new FileOutputStream(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")));
             fos.write("".getBytes());
             fos.close();
         }
     }
-
 
 
     private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments
