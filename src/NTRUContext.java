@@ -55,13 +55,25 @@ public class NTRUContext {
 
     public void writeKeyPair(String file_path)
     {
-        EncryptionKeyPair kp = this.ntru_ctx.generateKeyPair();
-
         try
         {
-                OutputStream kp_otpt = new FileOutputStream(file_path);
+                OutputStream kp_out = new FileOutputStream(file_path);
 
-                kp.writeTo(kp_otpt);
+                kp.writeTo(kp_out);
+        }
+        catch (IOException e)
+        {
+            System.out.println(String.format("Error writing to file: %s", e));
+        }
+    }
+
+    public void writePublicKey(String file_path)
+    {
+        try
+        {
+            OutputStream kp_out = new FileOutputStream(file_path);
+
+            kp.getPublic().writeTo(kp_out);
         }
         catch (IOException e)
         {

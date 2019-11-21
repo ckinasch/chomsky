@@ -59,8 +59,6 @@ public class ChatRoom implements Runnable
                 EncryptionPublicKey temp_pub_key = new EncryptionPublicKey(buff);
                 Client client;
 
-
-
                 if (peers_list != null && arrayContains(peers_list, temp_pub_key))
                 {
                     client = new Client(socket, peers_list.get(arrayInstanceIndex(peers_list, temp_pub_key)));

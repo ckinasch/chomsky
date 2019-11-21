@@ -69,6 +69,12 @@ public class ArrayListExtended<E> extends ArrayList<E> {
         return this;
     }
 
+    public ArrayListExtended<E> append(E c)
+    {
+        this.add(c);
+        return this;
+    }
+
     public E getMaybe(int index)
     {
         if (this.size() == 0 || this == null)
