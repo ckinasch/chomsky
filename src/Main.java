@@ -1,8 +1,5 @@
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Array;
 import java.net.BindException;
 import java.net.ConnectException;
@@ -11,6 +8,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import net.sf.ntru.encrypt.NtruEncrypt;
+
+import javax.xml.crypto.Data;
 
 public class Main {
     private static HashMap<String, Executable> commandMap;
@@ -134,7 +133,41 @@ public class Main {
         commandMap.put("K", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                //TODO
+                String aliasPath = String.format("%s/.chomsky/ids/%s.alias", System.getProperty("user.home"), args.get(0));
+
+                String keyPath = String.format("%s/.chomsky/ids/%s_private.key", System.getProperty("user.home"), args.get(0));
+                String keyPubPath = String.format("%s/.chomsky/ids/%s_public.key", System.getProperty("user.home"), args.get(0));
+
+                try
+                {
+                    File f = new File(aliasPath);
+
+                    if (f.exists())
+                    {
+                        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+                        System.out.print(String.format("File -> %s : already exists. Overwrite alias and associated keys? ", aliasPath));
+                        if ((char) reader.read() != 'y')
+                        {
+                            System.out.println("Okie dokes, nm then...");
+                            System.exit(1);
+                        }
+                    }
+                    FileOutputStream s = new FileOutputStream(f);
+
+                    s.flush();
+                    s.write(String.format("%s,%s,%s", args.get(0), keyPath, keyPubPath).getBytes());
+                    s.close();
+                } catch (Exception e)
+                {
+                    System.out.println(String.format("Error writing to file %s: %s", aliasPath, e.toString()));
+                }
+
+
+                NTRUContext ctx = new NTRUContext();
+
+                ctx.writeKeyPair(keyPath);
+                ctx.writePublicKey(keyPubPath);
+                System.out.println(String.format("New alias and keys created for %s -> %s", args.get(0), aliasPath));
             }
         });
 
@@ -170,7 +203,7 @@ public class Main {
                     }
                     else
                     {
-                        new Thread(new ChatRoom(Integer.parseInt(args.get(0)), getAliasArray(args.get(1)))).start();
+                        new Thread(new ChatRoom(Integer.parseInt(args.get(0)), getAliasArray(args.get(1)).append(ids.get(0)))).start();
                     }
 
                     new ChatConnection("127.0.0.1", Integer.parseInt(args.get(0)), ids.get(0));
@@ -233,7 +266,7 @@ public class Main {
     private static ArrayListExtended<Alias> getAliasArray(String list)
     {
         ArrayListExtended tmp = new ArrayListExtended();
-        ArrayListExtended<String> listArray = new ArrayListExtended<String>(Arrays.asList(list.split(",")));
+        ArrayListExtended<String> listArray = new ArrayListExtended<String>(Arrays.asList(list .split(",")));
         // Need alias not found error handling
         if (listArray.head() != null && instanceOf(peers, listArray.head()) != -1)
         {
