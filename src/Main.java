@@ -16,6 +16,8 @@ public class Main {
 
     private static Config config;
 
+    private enum listTypes { ids, peers };
+
     private static final String IDS = "IDS";
     private static final String PEERS = "PEERS";
 
@@ -362,7 +364,11 @@ public class Main {
         ids.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
         peers.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
         peers.add(new Alias("john", String.format("%s/.chomsky/peers/john.key", System.getProperty("user.home"))));
+    }
 
+    private static ArrayListExtended<Alias> readAlias(listTypes T)
+    {
+        if (T == )
     }
 
     private static void parseCommands(ArrayList<ArrayList<String>> argsArray)   //Goes through argsArray and runs each command with given arguments
