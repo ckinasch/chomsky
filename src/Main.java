@@ -160,8 +160,6 @@ public class Main {
                 {
                     System.out.println(String.format("Error writing to file %s: %s", aliasPath, e.toString()));
                 }
-
-
                 NTRUContext ctx = new NTRUContext();
 
                 ctx.writeKeyPair(keyPath);

@@ -1,4 +1,5 @@
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
@@ -30,12 +31,33 @@ public class AliasHandler {
     }
 
     // -l / -L : List Alias
-    static void listAliases(ArrayList<Alias> idsList, ArrayList<Alias>peersList) throws IOException {
+    static void listAliases(ArrayList<Alias> idsList, ArrayList<Alias> peersList) throws IOException {
         System.out.println(String.format("" +
                 "Ids:" +
                 "%s\n" +
                 "Peers:" +
                 "%s", idsList, peersList));
+    }
+
+    public static void writeListToFile(String args, ArrayList<Alias> list) {
+        try {
+            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(String.format("%s/.chomsky/%s.mfs", System.getProperty("user.home"), args)));
+            out.writeObject(list);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static ArrayList<Alias> readListFromFile(String args) {
+        ArrayList<Alias> list;
+        try {
+            ObjectInputStream in = new ObjectInputStream(new FileInputStream(String.format("%s/.chomsky/%s.mfs", System.getProperty("user.home"), args)));
+           list = new ArrayList<Alias>(in.readObject());
+        } catch (IOException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
+        return list;
     }
 
 
