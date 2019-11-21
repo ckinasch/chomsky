@@ -1,3 +1,4 @@
+import net.sf.ntru.encrypt.EncryptionKeyPair;
 import net.sf.ntru.encrypt.EncryptionPublicKey;
 
 import java.io.*;
@@ -11,17 +12,17 @@ public class AliasHandler {
      */
 
     // -a / -A : Add Alias
-    static void addAlias(String args, ArrayList<Alias> list) {
+    static void addAlias(String args, ArrayList<Alias> list, String type) {
         String[] temp = args.split(" ");
         list.add(new Alias(temp[0], temp[1]));
-        writeAliasesToFile(args, list);
+        writeAliasesToFile(args, list, type);
         System.out.println(String.format("Add: %s", temp[0]));
     }
 
     // -r / -R : Remove Alias
-    static void removeAlias(String args, ArrayList<Alias> list) {
+    static void removeAlias(String args, ArrayList<Alias> list, String type) {
         list.removeIf(s -> s.getAlias().equals(args));
-        writeAliasesToFile(args, list);
+        writeAliasesToFile(args, list, type);
 
     }
 
@@ -43,15 +44,33 @@ public class AliasHandler {
                 "%s\n", args, list));
     }
 
-    static void writeAliasesToFile(String args, ArrayList<Alias> list) {
+    static void writeAliasesToFile(String args, ArrayList<Alias> list, String type) {
+
         String filePath = String.format("%s/.chomsky/%s/%s.alias", System.getProperty("user.home"), args, args);
         for (int index = 0; index < list.size(); index++) {
-            String keyPath = String.format("%s/.chomsky/%s/%s_pubkey.key", System.getProperty("user.home"), args, list.get(index).getAlias());
+
+            String keyPath;
+            if (args.equals("ids"))
+            {
+                keyPath = String.format("%s/.chomsky/%s/%s_private.key", System.getProperty("user.home"), args, list.get(index).getAlias());
+            }
+            else
+            {
+                keyPath = String.format("%s/.chomsky/%s/%s_pubkey.key", System.getProperty("user.home"), args, list.get(index).getAlias());
+            }
 
             try {
-                InputStream pub_inpt = new FileInputStream(list.get(index).getPublicKeyUrl());
-                EncryptionPublicKey ctx = new EncryptionPublicKey(pub_inpt);
-                ctx.writeTo(new FileOutputStream(keyPath));
+                if (args.equals("ids")) {
+                    InputStream pub_inpt = new FileInputStream(list.get(index).getPublicKeyUrl());
+                    EncryptionKeyPair ctx = new EncryptionKeyPair(pub_inpt);
+                    ctx.writeTo(new FileOutputStream(keyPath));
+                }
+                else
+                {
+                    InputStream pub_inpt = new FileInputStream(list.get(index).getPublicKeyUrl());
+                    EncryptionPublicKey ctx = new EncryptionPublicKey(pub_inpt);
+                    ctx.writeTo(new FileOutputStream(keyPath));
+                }
             } catch (FileNotFoundException e) {
                 System.out.println(String.format("Key file not found for %s -> %s", list.get(index).getAlias(), e));
                 continue;
@@ -64,12 +83,12 @@ public class AliasHandler {
                 if (index > 0) {
                     FileWriter s = new FileWriter(f, true);
                     s.flush();
-                    s.write(keyPath);
+                    s.write(String.format("%s,%s", list.get(index).getAlias(), keyPath));
                     s.close();
                 } else {
                     FileOutputStream s = new FileOutputStream(f);
                     s.flush();
-                    s.write(keyPath.getBytes());
+                    s.write(String.format("%s,%s", list.get(index).getAlias(), keyPath).getBytes());
                     s.close();
                 }
             } catch (Exception e) {

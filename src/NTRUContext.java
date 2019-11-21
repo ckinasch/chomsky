@@ -80,6 +80,10 @@ public class NTRUContext {
         return ntru_ctx.encrypt(input.getBytes(), this.peer_kp);
     }
 
+    public byte[] encrypt(byte[] input) {
+        return ntru_ctx.encrypt(input, this.peer_kp);
+    }
+
     public byte[] decrypt(byte[] enc) {
         return ntru_ctx.decrypt(enc, this.kp);
     }

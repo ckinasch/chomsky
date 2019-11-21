@@ -1,5 +1,6 @@
 import net.sf.ntru.encrypt.EncryptionKeyPair;
 import net.sf.ntru.encrypt.EncryptionPublicKey;
+import net.sf.ntru.encrypt.NtruEncrypt;
 
 import javax.security.auth.kerberos.EncryptionKey;
 import java.io.DataInputStream;
@@ -8,9 +9,11 @@ import java.io.IOException;
 import java.lang.reflect.Array;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.nio.ByteBuffer;
 import java.rmi.NoSuchObjectException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Random;
 
 public class ChatRoom implements Runnable
 {
@@ -54,7 +57,8 @@ public class ChatRoom implements Runnable
                 DataInputStream inputStream = new DataInputStream(socket.getInputStream());
                 DataOutputStream outputStream = new DataOutputStream(socket.getOutputStream());
 
-                byte[] buff = inputStream.readNBytes(2066);
+                int pkeyLength = inputStream.readInt();
+                byte[] buff = inputStream.readNBytes(pkeyLength);
 
                 EncryptionPublicKey temp_pub_key = new EncryptionPublicKey(buff);
                 Client client;
@@ -206,7 +210,25 @@ public class ChatRoom implements Runnable
             inputStream = new DataInputStream(socket.getInputStream());
             address = socket.getInetAddress().toString();
             isLoggedIn = true;
-            outputStream.writeUTF("\\acc");
+            this.ntru_ctx = ctx;
+
+            byte[] randArr = new byte[247];
+            new Random().nextBytes(randArr);
+            byte[] hs = ntru_ctx.encrypt(randArr);
+            outputStream.writeInt(ntru_ctx.getKp_pub().getEncoded().length);
+            outputStream.write(ntru_ctx.getKp_pub().getEncoded());
+            outputStream.writeInt(hs.length);
+            outputStream.write(hs);
+            byte[] solution = ntru_ctx.decrypt(inputStream.readNBytes(inputStream.readInt()));
+
+            if (Arrays.equals(solution, randArr))
+            {
+                outputStream.writeUTF("\\acc");
+            }
+            else
+            {
+                outputStream.writeUTF("//rej");
+            }
         }
 
         public String getAddress()

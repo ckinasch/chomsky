@@ -38,7 +38,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.writeAliasesToFile(IDS, ids);
+                    AliasHandler.writeAliasesToFile(IDS, ids, "ids");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -49,7 +49,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.removeAlias(args.get(0), ids);
+                    AliasHandler.removeAlias(args.get(0), ids, "ids");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -88,7 +88,7 @@ public class Main {
                 } else {
                     try {
                         peers.add(new Alias(args.get(0), args.get(1)));
-                        AliasHandler.writeAliasesToFile(PEERS, peers);
+                        AliasHandler.writeAliasesToFile(PEERS, peers, "peers");
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -100,7 +100,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.removeAlias(args.get(0), peers);
+                    AliasHandler.removeAlias(args.get(0), peers, "peers");
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -143,7 +143,7 @@ public class Main {
                     ctx.writeKeyPair(keyPath);
                     ids.add(new Alias(args.get(0), keyPath));
 
-                    AliasHandler.writeAliasesToFile(IDS, ids);
+                    AliasHandler.writeAliasesToFile(IDS, ids, "ids");
                 }
 
             }
