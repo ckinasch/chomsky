@@ -75,7 +75,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-//                    System.out.println(config.listAliases(IDS, ids));
+                    System.out.print(AliasHandler.listAliases(IDS, ids));
 
                 } catch (Exception e) {
                     e.printStackTrace();
