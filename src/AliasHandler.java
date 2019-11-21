@@ -14,12 +14,15 @@ public class AliasHandler {
     static void addAlias(String args, ArrayList<Alias> list) {
         String[] temp = args.split(" ");
         list.add(new Alias(temp[0], temp[1]));
+        writeAliasesToFile(args, list);
         System.out.println(String.format("Add: %s", temp[0]));
     }
 
     // -r / -R : Remove Alias
     static void removeAlias(String args, ArrayList<Alias> list) {
         list.removeIf(s -> s.getAlias().equals(args));
+        writeAliasesToFile(args, list);
+
     }
 
     // -m / -M : Modify Alias
@@ -48,22 +51,18 @@ public class AliasHandler {
             try {
                 InputStream pub_inpt = new FileInputStream(list.get(index).getPublicKeyUrl());
                 EncryptionPublicKey ctx = new EncryptionPublicKey(pub_inpt);
-
                 ctx.writeTo(new FileOutputStream(keyPath));
-
             } catch (FileNotFoundException e) {
-                System.out.println(String.format("Key file not found for %s", list.get(index).getAlias()));
+                System.out.println(String.format("Key file not found for %s -> %s", list.get(index).getAlias(), e));
                 continue;
             } catch (IOException e) {
-                System.out.println(String.format("Unable to write to %s", list.get(index).getPublicKeyUrl()));
+                System.out.println(String.format("Unable to write to %s -> %s", list.get(index).getPublicKeyUrl(), e));
                 continue;
             }
             try {
                 File f = new File(filePath);
-
                 if (index > 0) {
                     FileWriter s = new FileWriter(f, true);
-
                     s.flush();
                     s.write(keyPath);
                     s.close();
@@ -121,22 +120,18 @@ public class AliasHandler {
     }
 
     static String fileToString(String filePath) {
+        String s = "";
         try {
-            String s = "";
             String buff;
             BufferedReader file = new BufferedReader(new InputStreamReader(new FileInputStream(filePath)));
-
             while ((buff = file.readLine()) != null) {
-
                 s += buff;
                 s += "\n";
-
             }
-            return s;
         } catch (Exception e) {
             e.printStackTrace();
             System.exit(1);
-            return "";
         }
+        return s;
     }
 }

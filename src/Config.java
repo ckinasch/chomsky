@@ -1,16 +1,12 @@
-import java.io.*;
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Properties;
 
 public class Config {
-    // Public attributes, access in main
     private static final Path CONF_PATH = Paths.get(String.format("%s/.chomsky/", System.getProperty("user.home")));
 
-    public Config() throws IOException {    //returns currently loaded config file or loads/creates file on first pass
-        String currentOS = System.getProperty("os.name");
-
+    public Config() throws IOException {
         if (!Files.exists(CONF_PATH)) {
             createConfigStructure();
         }
