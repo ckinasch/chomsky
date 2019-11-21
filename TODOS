@@ -1,0 +1,13 @@
+Chat connection needs to be tunneled through NTRUContext methods (encrypt, decrypt).
+    NTRU instance created inside try/catch in Main.initialize();
+
+Input validation functions (regex operations)
+    - Ports
+    - IPs
+    - String cleaning
+    - Valid Keys format (2066)
+
+I/O Peers & Ids
+    - '~/.chomsky/peers' && '~/.chomsky/ids'
+
+

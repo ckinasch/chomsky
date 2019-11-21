@@ -41,7 +41,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.addAlias(IDS, ids);
+                    AliasHandler.addAlias(IDS, ids);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -52,7 +52,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.removeAlias(IDS, ids);
+                    AliasHandler.removeAlias(IDS, ids);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -64,7 +64,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.modifyAlias(IDS, ids);
+                    AliasHandler.modifyAlias(IDS, ids);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -76,8 +76,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    System.out.println(config.listAliases(IDS, ids));
-
+                    AliasHandler.listAliases(ids,peers);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -88,7 +87,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.addAlias(PEERS, peers);
+                    AliasHandler.addAlias(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -100,7 +99,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.removeAlias(PEERS, peers);
+                    AliasHandler.removeAlias(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -112,7 +111,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    config.modifyAlias(PEERS, peers);
+                    AliasHandler.modifyAlias(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -124,7 +123,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    System.out.println(config.listAliases(PEERS, peers));
+                    AliasHandler.listAliases(ids, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -342,7 +341,6 @@ public class Main {
                 }
             }
         }
-
         return out;
     }
 
@@ -359,6 +357,7 @@ public class Main {
         //TODO: wrap & route traffic in NTRUContext
 
         config = new Config(); //initialise config file
+        //TODO: any forward facing methods from conf???
         loadCommandMap();
 
         ids.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
