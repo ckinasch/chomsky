@@ -1,9 +1,6 @@
-import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
-import java.io.*;
 
 public class AliasHandler {
 
@@ -12,53 +9,32 @@ public class AliasHandler {
 
 
     // -a / -A : Add Alias
-    static void addAlias(String args, ArrayList<Alias> list) throws IOException {
+    static void addAlias(String args, ArrayList<Alias> list) {
         String temp[] = args.split(" ");
         list.add(new Alias(temp[0], temp[1]));
         System.out.println(String.format("Add: %s", temp[0]));
     }
 
     // -r / -R : Remove Alias
-    static void removeAlias(String args, ArrayList<Alias> list) throws IOException {
-
-        System.out.println(String.format("Remove: %s", args));
+    static void removeAlias(String args, ArrayList<Alias> list) {
+        list.removeIf(s -> s.getAlias().equals(args));
     }
 
     // -m / -M : Modify Alias
-    static void modifyAlias(String args, ArrayList<Alias> list) throws IOException {
+    static void modifyAlias(String args, ArrayList<Alias> list) {
+        String temp[] = args.split(" ");
+        int theIndex = 0;
 
+        //TODO
+
+        list.add(theIndex, new Alias(temp[0], temp[1]));
         System.out.println(String.format("Modify: %s", args));
     }
 
     // -l / -L : List Alias
-    static void listAliases(ArrayList<Alias> idsList, ArrayList<Alias> peersList) throws IOException {
+    static void listAliases(String args, ArrayList<Alias> list) {
         System.out.println(String.format("" +
-                "Ids:" +
-                "%s\n" +
-                "Peers:" +
-                "%s", idsList, peersList));
+                "%s:" +
+                "%s\n", args, list));
     }
-
-    public static void writeListToFile(String args, ArrayList<Alias> list) {
-        try {
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(String.format("%s/.chomsky/%s.mfs", System.getProperty("user.home"), args)));
-            out.writeObject(list);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public static ArrayList<Alias> readListFromFile(String args) {
-        ArrayList<Alias> list;
-        try {
-            ObjectInputStream in = new ObjectInputStream(new FileInputStream(String.format("%s/.chomsky/%s.mfs", System.getProperty("user.home"), args)));
-           list = new ArrayList<Alias>(in.readObject());
-        } catch (IOException | ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-
-        return list;
-    }
-
-
 }

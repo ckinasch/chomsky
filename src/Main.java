@@ -50,7 +50,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.removeAlias(IDS, ids);
+                    AliasHandler.removeAlias(args.get(0), ids);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -74,7 +74,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.listAliases(ids,peers);
+                    AliasHandler.listAliases(IDS, ids);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -97,7 +97,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.removeAlias(PEERS, peers);
+                    AliasHandler.removeAlias(args.get(0), peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -121,7 +121,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.listAliases(ids, peers);
+                    AliasHandler.listAliases(PEERS, peers);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -357,6 +357,8 @@ public class Main {
         loadCommandMap();
 
         ids.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
+        ids.add(new Alias("BigBoi", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
+
         peers.add(new Alias("OldMate", String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home"))));
         peers.add(new Alias("john", String.format("%s/.chomsky/peers/john.key", System.getProperty("user.home"))));
 
