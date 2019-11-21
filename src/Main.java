@@ -17,8 +17,8 @@ public class Main {
 
     private static Config config;
 
-    private static final String IDS = "IDS";
-    private static final String PEERS = "PEERS";
+    private static final String IDS = "ids";
+    private static final String PEERS = "peers";
 
     private static ArrayListExtended<Alias> ids = new ArrayListExtended<>();
     private static ArrayListExtended<Alias> peers = new ArrayListExtended<>();
@@ -38,7 +38,7 @@ public class Main {
             @Override
             public void execute(ArrayList<String> args) {
                 try {
-                    AliasHandler.addAlias(IDS, ids);
+                    AliasHandler.writeAliasesToFile(IDS, ids);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -88,7 +88,7 @@ public class Main {
                 } else {
                     try {
                         peers.add(new Alias(args.get(0), args.get(1)));
-                        AliasHandler.writePeerAliases(peers);
+                        AliasHandler.writeAliasesToFile(PEERS, peers);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }
@@ -143,7 +143,7 @@ public class Main {
                     ctx.writeKeyPair(keyPath);
                     ids.add(new Alias(args.get(0), keyPath));
 
-                    AliasHandler.writeIdsAliases(ids);
+                    AliasHandler.writeAliasesToFile(IDS, ids);
                 }
 
             }
@@ -311,26 +311,21 @@ public class Main {
 
     private static void initialize() throws IOException    //Initialization happens here
     {
-        System.out.println("Initializing");
-
         config = new Config(); //initialise config file
         loadCommandMap();
 
+        populateArrayLists("ids", ids);
+        populateArrayLists("peers", peers);
+    }
 
+    private static void populateArrayLists(String args, ArrayList<Alias> list) throws IOException {
+        String filePath = String.format("%s/.chomsky/%s/%s.alias", System.getProperty("user.home"), args, args);
+        File f = new File(filePath);
 
-        File f = new File(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")));
         if (f.exists()) {
-            ids.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")))));
+            list.addAll(AliasHandler.readAlias(AliasHandler.fileToString(filePath)));
         } else {
-            FileOutputStream fos = new FileOutputStream(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")));
-            fos.write("".getBytes());
-            fos.close();
-        }
-        File ff = new File(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")));
-        if (ff.exists()) {
-            peers.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")))));
-        } else {
-            FileOutputStream fos = new FileOutputStream(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")));
+            FileOutputStream fos = new FileOutputStream(filePath);
             fos.write("".getBytes());
             fos.close();
         }
@@ -354,12 +349,6 @@ public class Main {
 
     public static void main(String[] args) throws IOException {
         ArrayList<ArrayList<String>> argsArray = splitArgs(args);    //Split args into [arg][param] array
-
-        //FOR TESTING PURPOSES
-        //NTRUContext tmp = new NTRUContext();
-
-        //tmp.writeKeyPair(String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home")));
-
 
         if (validate(argsArray)) {
             initialize();
