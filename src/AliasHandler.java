@@ -1,3 +1,6 @@
+import net.sf.ntru.encrypt.EncryptionPublicKey;
+import net.sf.ntru.encrypt.NtruEncrypt;
+
 import java.io.IOException;
 import java.nio.Buffer;
 import java.nio.file.Path;
@@ -8,8 +11,8 @@ import java.util.Arrays;
 
 public class AliasHandler {
 
-    static Path ids = Paths.get(String.format("%s/.chomsky/ids/aliases.txt", System.getProperty("user.home")));
-    static Path peers = Paths.get(String.format("%s/.chomsky/peers/aliases.txt", System.getProperty("user.home")));
+    static String ids = String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home"));
+    static String peers = String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home"));
 
 
     // -a / -A : Add Alias
@@ -40,9 +43,89 @@ public class AliasHandler {
                 "%s", idsList, peersList));
     }
 
+    static void writePeerAliases(ArrayListExtended<Alias> l)
+    {
+        for (int index = 0; index < l.size(); index++)
+        {
+            try
+            {
+                InputStream peer_pub_inpt = new FileInputStream(l.get(index).getPublicKeyUrl());
+                EncryptionPublicKey ctx = new EncryptionPublicKey(peer_pub_inpt);
+
+                ctx.writeTo(new FileOutputStream(String.format("%s/.chomsky/peers/%s_pubkey.key", System.getProperty("user.home"), l.get(index).getAlias())));
+
+            } catch (FileNotFoundException e)
+            {
+                System.out.println(String.format("Key file not found for %s", l.get(index).getAlias()));
+                continue;
+            } catch (IOException e)
+            {
+                System.out.println(String.format("Unable to write to %s", l.get(index).getPublicKeyUrl()));
+                continue;
+            }
+            try
+            {
+                File f = new File(peers);
+
+                if (index>0)
+                {
+                    FileWriter s = new FileWriter(f, true);
+
+                    s.flush();
+                    s.write(String.format("\n%s,%s", l.get(index).getAlias(), String.format("%s/.chomsky/peers/%s_pubkey.key", System.getProperty("user.home"), l.get(index).getAlias())));
+                    s.close();
+                }
+                else
+                {
+                    FileOutputStream s = new FileOutputStream(f);
+
+                    s.flush();
+                    s.write(String.format("%s,%s", l.get(index).getAlias(), String.format("%s/.chomsky/peers/%s_pubkey.key", System.getProperty("user.home"), l.get(index).getAlias())).getBytes());
+                    s.close();
+                }
+            } catch (Exception e)
+            {
+                System.out.println(String.format("Unable to write to -> %s/.chomsky/ids/%s_pubkey.key: %s", System.getProperty("user.home"), l.get(index).getAlias(), e.getMessage()));
+            }
+            System.out.println(String.format("New alias and keys created for %s -> %s", l.get(index), String.format("%s/.chomsky/peers/%s_pubkey.key", System.getProperty("user.home"), l.get(index).getAlias())));
+        }
+    }
+
+    static void writeIdsAliases(ArrayListExtended<Alias> l)
+    {
+        for (int index = 0; index < l.size(); index++)
+        {
+            try
+            {
+                File f = new File(ids);
+
+                if (index>0)
+                {
+                    FileWriter s = new FileWriter(f, true);
+
+                    s.flush();
+                    s.write(String.format("\n%s,%s", l.get(index).getAlias(), String.format("%s/.chomsky/ids/%s_pubkey.key", System.getProperty("user.home"), l.get(index).getAlias())));
+                    s.close();
+                }
+                else
+                {
+                    FileOutputStream s = new FileOutputStream(f);
+
+                    s.flush();
+                    s.write(String.format("%s,%s", l.get(index).getAlias(), String.format("%s/.chomsky/ids/%s_pubkey.key", System.getProperty("user.home"), l.get(index).getAlias())).getBytes());
+                    s.close();
+                }
+            } catch (Exception e)
+            {
+                System.out.println(String.format("Unable to write to -> %s/.chomsky/ids/%s_pubkey.key: %s", System.getProperty("user.home"), l.get(index).getAlias(), e.getMessage()));
+            }
+            System.out.println(String.format("New alias and keys created for %s -> %s", l.get(index), String.format("%s/.chomsky/ids/%s_private.key", System.getProperty("user.home"), l.get(index).getAlias())));
+        }
+    }
+
     public static ArrayListExtended<Alias> readAlias(String fileContents)
     {
-        if (fileContents == null)
+        if (fileContents == null || fileContents.isEmpty())
         {
             return new ArrayListExtended<>();
         }
@@ -50,7 +133,6 @@ public class AliasHandler {
         ArrayListExtended<String> l = new ArrayListExtended<>(Arrays.asList(fileContents.split("\\s")));
 
         ArrayListExtended<ArrayListExtended<String>> parsedL = splitArray(l);
-
         return new ArrayListExtended<>(){
             {
                 add(new Alias(parsedL.head().get(0), parsedL.head().get(1)));
@@ -96,7 +178,10 @@ public class AliasHandler {
 
             while ((buff=file.readLine()) != null)
             {
+
                 s += buff;
+                s += "\n";
+
             }
             return s;
         } catch (Exception e)

@@ -8,6 +8,7 @@ import java.util.Arrays;
 import java.util.HashMap;
 
 import net.sf.ntru.encrypt.NtruEncrypt;
+import org.bouncycastle.crypto.BufferedAsymmetricBlockCipher;
 
 import javax.xml.crypto.Data;
 
@@ -84,11 +85,18 @@ public class Main {
         commandMap.put("A", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                try {
-                    AliasHandler.addAlias(PEERS, peers);
-
-                } catch (Exception e) {
-                    e.printStackTrace();
+                if (isInstanceOf(peers, args.get(0)))
+                {
+                    System.out.println(String.format("Peer->%s already exists", args.get(0)));
+                }
+                else
+                {
+                    try {
+                        peers.add(new Alias(args.get(0), args.get(1)));
+                        AliasHandler.writePeerAliases(peers);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
                 }
             }
         });
@@ -132,41 +140,19 @@ public class Main {
         commandMap.put("K", new Executable() {
             @Override
             public void execute(ArrayList<String> args) {
-                String aliasPath = String.format("%s/.chomsky/ids/%s.alias", System.getProperty("user.home"), args.get(0));
-
                 String keyPath = String.format("%s/.chomsky/ids/%s_private.key", System.getProperty("user.home"), args.get(0));
-                String keyPubPath = String.format("%s/.chomsky/ids/%s_public.key", System.getProperty("user.home"), args.get(0));
-
-                try
+                if (isInstanceOf(ids, args.get(0)))
                 {
-                    File f = new File(aliasPath);
-
-                    if (f.exists())
-                    {
-                        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-                        System.out.print(String.format("File -> %s : already exists. Overwrite alias and associated keys? ", aliasPath));
-                        if ((char) reader.read() != 'y')
-                        {
-                            System.out.println("Okie dokes, nm then...");
-                            System.exit(1);
-                        }
-                    }
-                    FileOutputStream s = new FileOutputStream(f);
-
-                    s.flush();
-                    s.write(String.format("%s,%s,%s", args.get(0), keyPath, keyPubPath).getBytes());
-                    s.close();
-                } catch (Exception e)
-                {
-                    System.out.println(String.format("Error writing to file %s: %s", aliasPath, e.toString()));
+                       System.out.println(String.format("ID->%s already exists", args.get(0)));
                 }
+                else
+                {
+                    NTRUContext ctx = new NTRUContext();
+                    ctx.writeKeyPair(keyPath);
+                    ids.add(new Alias(args.get(0), keyPath));
 
-
-                NTRUContext ctx = new NTRUContext();
-
-                ctx.writeKeyPair(keyPath);
-                ctx.writePublicKey(keyPubPath);
-                System.out.println(String.format("New alias and keys created for %s -> %s", args.get(0), aliasPath));
+                    AliasHandler.writeIdsAliases(ids);
+                }
             }
         });
 
@@ -319,6 +305,22 @@ public class Main {
         }
     }
 
+    private static boolean isInstanceOf(ArrayListExtended<Alias> subject, String comp)
+    {
+        if (subject == null || subject.size() == 0)
+        {
+            return false;
+        }
+        else if (subject.last().equals(comp))
+        {
+            return true;
+        }
+        else
+        {
+            return isInstanceOf(subject.body(), comp);
+        }
+    }
+
     private static ArrayList<ArrayList<String>> splitArgs(String[] args) {
         ArrayList<ArrayList<String>> out = new ArrayList();
 
@@ -358,8 +360,28 @@ public class Main {
         //TODO: any forward facing methods from conf???
         loadCommandMap();
 
-        ids.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")))));
-        peers.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")))));
+        File f = new File(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")));
+        if (f.exists())
+        {
+            ids.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")))));
+        }
+        else
+        {
+            FileOutputStream fos = new FileOutputStream(String.format("%s/.chomsky/ids/ids.alias", System.getProperty("user.home")));
+            fos.write("".getBytes());
+            fos.close();
+        }
+        File ff = new File(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")));
+        if (ff.exists())
+        {
+            peers.addAll(AliasHandler.readAlias(AliasHandler.fileToString(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")))));
+        }
+        else
+        {
+            FileOutputStream fos = new FileOutputStream(String.format("%s/.chomsky/peers/peers.alias", System.getProperty("user.home")));
+            fos.write("".getBytes());
+            fos.close();
+        }
     }
 
 
@@ -383,9 +405,9 @@ public class Main {
         ArrayList<ArrayList<String>> argsArray = splitArgs(args);    //Split args into [arg][param] array
 
         //FOR TESTING PURPOSES
-        NTRUContext tmp = new NTRUContext();
+        //NTRUContext tmp = new NTRUContext();
 
-        tmp.writeKeyPair(String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home")));
+        //tmp.writeKeyPair(String.format("%s/.chomsky/ids/default.key", System.getProperty("user.home")));
 
 
         if (validate(argsArray)) {
