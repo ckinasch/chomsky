@@ -83,7 +83,7 @@ public class AliasHandler {
                 if (index > 0) {
                     FileWriter s = new FileWriter(f, true);
                     s.flush();
-                    s.write(String.format("%s,%s", list.get(index).getAlias(), keyPath));
+                    s.write(String.format("\n%s,%s", list.get(index).getAlias(), keyPath));
                     s.close();
                 } else {
                     FileOutputStream s = new FileOutputStream(f);
