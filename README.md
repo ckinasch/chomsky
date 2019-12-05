@@ -1,8 +1,6 @@
 # Chomsky
 
-Secure messaging application, secured with E2E encryption.
-
-Allows cross platform CLI messaging, 
+Cross platform CLI messaging application, 
 secured with E2E encryption
 ( https://github.com/tbuktu/ntru ). 
 
