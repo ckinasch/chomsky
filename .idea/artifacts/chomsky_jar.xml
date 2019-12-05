@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="chomsky:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/chomsky_jar</output-path>
+    <root id="archive" name="chomsky.jar">
+      <element id="module-output" name="chomsky" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/net/sf/ntru/ntru/1.2/ntru-1.2.jar" path-in-jar="/" />
+      <element id="extracted-dir" path="$MAVEN_REPOSITORY$/org/bouncycastle/bcprov-jdk16/1.46/bcprov-jdk16-1.46.jar" path-in-jar="/" />
+    </root>
+  </artifact>
+</component>
