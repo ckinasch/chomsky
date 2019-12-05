@@ -1,12 +1,17 @@
 # Chomsky
 
-Secure messaging application
+Secure messaging application, secured with E2E encryption.
 
-Java web socket
+Allows cross platform CLI messaging, 
+secured with E2E encryption
+( https://github.com/tbuktu/ntru ). 
 
-P2P with end to end encryption
+Connections are P2P via web socket.
 
-Runs from Linux CLI
+First user creates a local room with the option to 
+only allow specific users connect (verified through
+key exchange).
+
 
 **Contributors**: 
 Christjan Kinasch | Jyhe Mark | William Sim | Thaddeus Treloar
