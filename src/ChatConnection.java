@@ -1,3 +1,5 @@
+import net.sf.ntru.encrypt.EncryptionPublicKey;
+
 import java.io.*;
 import java.net.Socket;
 import java.net.SocketException;
@@ -19,7 +21,15 @@ public class ChatConnection
         // Handshake With server
         //ntru_ctx.getKp_pub().writeTo(outputStream);
 
+        outputStream.writeInt(ntru_ctx.getKp_pub().getEncoded().length);
         outputStream.write(ntru_ctx.getKp_pub().getEncoded());
+
+        this.ntru_ctx.setPeer_kp(new EncryptionPublicKey(inputStream.readNBytes(inputStream.readInt())));
+        byte[] hs = inputStream.readNBytes(inputStream.readInt());
+        byte[] solution = this.ntru_ctx.encrypt(this.ntru_ctx.decrypt(hs));
+
+        outputStream.writeInt(solution.length);
+        outputStream.write(solution);
 
         if (inputStream.readUTF().equals("\\acc"))
         {
